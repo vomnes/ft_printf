@@ -10,27 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+//"%s %20% d\n"
+
 #include "ft_printf.h"
 
 int		ft_parsing_start(const char *s, t_args *elem)
 {
 	int i;
 	int k;
+	int is_arg;
 
 	i = 0;
 	k = 0;
+	is_arg = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == '%' && s[i + 1] != '%')
+		if ((is_arg == 1 && s[i] == '%') || (s[i] == '%' && s[i + 1] == '%'))
+			i++;
+		if (is_arg == 1 && ft_is_type(s[i]) == 1)
+			is_arg = 0;
+		if (s[i] == '%' && s[i + 1] != '%' && is_arg == 0)
 		{
 			ft_init_struct(elem, &k);
 			elem[k].start = i;
+			is_arg = 1;
 			k++;
 		}
-		if (s[i] == '%' && s[i + 1] == '%')
-			i++;
 		i++;
 	}
+	if (k > 0)
+		elem[0].nb_arg = k;
 	return (0);
 }
 
@@ -61,7 +70,7 @@ int		ft_parsing_flag(const char *s, t_args *elem)
 	int k;
 
 	k = 0;
-	while (k < ft_nb_pct(s))
+	while (k < elem[0].nb_arg)
 	{
 		i = elem[k].start;
 		i++;
@@ -98,7 +107,7 @@ int		ft_parsing_width(const char *s, t_args *elem)
 	int k;
 
 	k = 0;
-	while (k < ft_nb_pct(s))
+	while (k < elem[0].nb_arg)
 	{
 		i = elem[k].new_start;
 		if (elem[k].new_start == elem[k].start)

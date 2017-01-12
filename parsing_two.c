@@ -36,7 +36,7 @@ int		ft_parsing_precision(const char *s, t_args *elem)
 	int k;
 
 	k = 0;
-	while (k < ft_nb_pct(s))
+	while (k < elem[0].nb_arg)
 	{
 		i = elem[k].new_start;
 		if (elem[k].new_start == elem[k].start)
@@ -90,7 +90,7 @@ int		ft_parsing_length(const char *s, t_args *elem)
 
 	k = 0;
 	i = 0;
-	while (k < ft_nb_pct(s))
+	while (k < elem[0].nb_arg)
 	{
 		i = elem[k].new_start;
 		if (elem[k].new_start == elem[k].start)
@@ -108,7 +108,7 @@ void	ft_parsing_type(const char *s, t_args *elem)
 
 	k = 0;
 	i = 0;
-	while (k < ft_nb_pct(s))
+	while (k < elem[0].nb_arg)
 	{
 		i = elem[k].new_start;
 		if (elem[k].new_start == elem[k].start)
@@ -117,7 +117,6 @@ void	ft_parsing_type(const char *s, t_args *elem)
 		{
 			elem[k].end = i;
 			elem[k].type = s[i];
-			ft_printf_struct(elem, &k);
 			k++;
 			i = elem[k].start;
 		}
