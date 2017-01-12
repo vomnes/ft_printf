@@ -1,38 +1,35 @@
 # include "ft_printf.h"
 
-
-void ft_manage_parsing(char **format, t_args *elem, va_list *args)
+int		ft_manage_parsing(const char *s, t_args *elem)
 {
-    ft_parsing_flag(format, &(*elem));
-    ft_parsing_width(format, &(*elem), args);
-    ft_parsing_precision(format, &(*elem), args);
-    ft_parsing_length(format, &(*elem));
+	ft_parsing_start(s, elem)
+	ft_parsing_flag(s, elem)
+	ft_parsing_width(s, elem)
+	ft_parsing_precision(s, elem)
+	ft_parsing_length(s, elem);
+	ft_parsing_type(s, elem);
+	return (0);
 }
 
-int ft_printf_run(char *format, va_list *args, t_args *elem, int *len)
+int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
 {
-    while (*format != '\0')
+    int i;
+	int k;
+
+    i = 0;
+	k = 0;
+	ft_manage_parsing(format, elem);
+    while (s[i] != '\0')
     {
-        if (*format == '%')
+		if (s[i] == '%' && s[i + 1] == '%')
+			i++;
+        if (i == elem[*k].start)
         {
-            ft_init_struct(&(*elem));
-            format++;
-            if (*format == '%')
-                ft_putchar('%');
-            else
-            {
-                while (!ft_is_type(*format))
-                {
-                    ft_manage_parsing((char **)&format, elem, args);
-                    format++;
-                }
-                ft_printf_struct(&(*elem));
-                (*len) += ft_strlen("Test");
-                format++;
-            }
+
         }
-        ft_putchar(*format);
-        format++;
+		else
+        	ft_putchar(format[i]);
+        i++;
         (*len)++;
     }
     return (*len);
@@ -41,11 +38,13 @@ int ft_printf_run(char *format, va_list *args, t_args *elem, int *len)
 int			ft_printf(const char *format, ...)
 {
     va_list args;
+    t_args *elem;
     int len;
-    t_args elem;
 
+    if (!(elem = ft_memalloc(sizeof(t_args) * 10)))
+	   return (-1);
     va_start(args, format);
-    ft_printf_run((char*)format, &args, &elem, &len);
+    ft_printf_run(format, &elem, &args, &len);
     va_end(args);
     return (len);
 }
