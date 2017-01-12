@@ -1,76 +1,93 @@
 # include "ft_printf.h"
 
-int		ft_nb_pct(const char *s)
+void ft_init_struct(t_args *elem, int *k)
 {
-	int i;
-	int count;
-
-	i = 0;
-	count = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '%')
-		{
-			if (s[i + 1] == '%')
-				i++;
-			else
-				count++;
-		}
-		i++;
-	}
-	return (count);
-}
-
-void ft_init_struct(t_args *elem)
-{
-    ft_bzero(elem->prefix, 3);
-    elem->pre_hash = 0;
-    elem->pre_zero = 0;
-    elem->end_space = 0;
-    elem->pre_sign = 0;
-    elem->pre_blank = 0;
-    elem->ok_width = 0;
-    elem->width = 0;
-    elem->ok_precision = 0;
-    elem->precision = 0;
+    ft_bzero(elem[*k].prefix, 3);
+	elem[*k].start = 0;
+	elem[*k].end = 0;
+	elem[*k].new_start = 0;
+	elem[*k].nb_arg = 0;
+    elem[*k].pre_hash = 0;
+    elem[*k].pre_zero = 0;
+    elem[*k].end_space = 0;
+    elem[*k].pre_sign = 0;
+    elem[*k].pre_blank = 0;
+    elem[*k].ok_width = 0;
+    elem[*k].width = 0;
+	elem[*k].wildcard_width = 0;
+    elem[*k].ok_precision = 0;
+    elem[*k].precision = 0;
+	elem[*k].wildcard_precision = 0;
+	elem[*k].type = 0;
+	elem[*k].i_nb = 0;
+	elem[*k].u_nb = 1;
 }
 
 int		ft_is_type(int c)
 {
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' ||
 			c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U' ||
-			c == 'x' || c == 'X' || c == 'c' || c == 'C');
+			c == 'x' || c == 'X' || c == 'c' || c == 'C' || c == '%');
 }
 
-void ft_printf_struct(t_args *elem)
+int		ft_is_flag(int c)
+{
+	return (c == '#' || c == '0' || c == '-' || c == '+' || c == ' ');
+}
+
+int		ft_is_signed(int c)
+{
+	return (c == 'D' || c == 'd' || c == 'i');
+}
+
+void ft_printf_struct(t_args *elem, int *k)
 {
     ft_putchar('\n');
-    ft_putstr("elem->prefix:  ");
-    ft_putendl(elem->prefix);
-    ft_putstr("elem->pre_hash:  ");
-    ft_putnbr(elem->pre_hash);
+    //ft_putstr("elem->prefix:  ");
+    ft_putendl(elem[*k].prefix);
+    ft_putstr("#:  ");
+    ft_putnbr(elem[*k].pre_hash);
     ft_putchar('\n');
-    ft_putstr("elem->pre_zero:  ");
-    ft_putnbr(elem->pre_zero);
+    ft_putstr("0:  ");
+    ft_putnbr(elem[*k].pre_zero);
     ft_putchar('\n');
-    ft_putstr("elem->end_space:  ");
-    ft_putnbr(elem->end_space);
+    ft_putstr("-:  ");
+    ft_putnbr(elem[*k].end_space);
     ft_putchar('\n');
-    ft_putstr("elem->pre_sign:  ");
-    ft_putnbr(elem->pre_sign);
+    ft_putstr("+:  ");
+    ft_putnbr(elem[*k].pre_sign);
     ft_putchar('\n');
-    ft_putstr("elem->pre_blank:  ");
-    ft_putnbr(elem->pre_blank);
+    ft_putstr(" :  ");
+    ft_putnbr(elem[*k].pre_blank);
     ft_putchar('\n');
-    ft_putstr("elem->ok_width:  ");
-    ft_putnbr(elem->ok_width);
+    ft_putstr("ok_width:  ");
+    ft_putnbr(elem[*k].ok_width);
     ft_putchar('\n');
-    ft_putstr("elem->width:  ");
-    ft_putnbr(elem->width);
+    ft_putstr("width:  ");
+    ft_putnbr(elem[*k].width);
     ft_putchar('\n');
-    ft_putstr("elem->ok_precision:  ");
-    ft_putnbr(elem->ok_precision);
+	ft_putstr("wildcard_width:  ");
+	ft_putnbr(elem[*k].wildcard_width);
+	ft_putchar('\n');
+    ft_putstr("ok_precision:  ");
+    ft_putnbr(elem[*k].ok_precision);
     ft_putchar('\n');
-    ft_putstr("elem->precision:  ");
-    ft_putnbr(elem->precision);
+    ft_putstr("precision:  ");
+    ft_putnbr(elem[*k].precision);
+	ft_putchar('\n');
+	ft_putstr("wildcard_precision:  ");
+	ft_putnbr(elem[*k].wildcard_precision);
+	ft_putchar('\n');
+	ft_putstr("start:  ");
+	ft_putnbr(elem[*k].start);
+	ft_putchar('\n');
+	ft_putstr("end:  ");
+	ft_putnbr(elem[*k].end);
+	ft_putchar('\n');
+	ft_putstr("type:  ");
+	ft_putchar(elem[*k].type);
+	ft_putchar('\n');
+	ft_putstr("length:  ");
+	ft_putnbr(elem[*k].length);
+	ft_putchar('\n');
 }
