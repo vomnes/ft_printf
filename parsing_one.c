@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//"%s %20% d\n"
-
 #include "ft_printf.h"
 
 int		ft_parsing_start(const char *s, t_args *elem)
