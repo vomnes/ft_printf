@@ -78,6 +78,9 @@ static void ft_put_length(const char *s, t_args *elem, int *i, int *k)
 			elem[*k].length = j;
 		(*i)++;
 	}
+	else
+		elem[*k].length = no;
+	elem[*k].new_start = *i;
 }
 
 int		ft_parsing_length(const char *s, t_args *elem)
@@ -86,6 +89,7 @@ int		ft_parsing_length(const char *s, t_args *elem)
 	int k;
 
 	k = 0;
+	i = 0;
 	while (k < ft_nb_pct(s))
 	{
 		i = elem[k].new_start;
