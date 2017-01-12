@@ -24,7 +24,13 @@
 
 typedef enum			e_length
 {
-	no, hh, h, ll, l, j, z
+	no,
+	hh,
+	h,
+	ll,
+	l,
+	j,
+	z
 }						t_length;
 
 typedef	struct	s_args
@@ -32,6 +38,7 @@ typedef	struct	s_args
 	int 			start;
 	int 			end;
 	int 			new_start;
+	int				nb_arg;
 	char			prefix[3];
 	int				pre_hash;
 	int				pre_zero;
@@ -66,6 +73,5 @@ void ft_printf_struct(t_args *elem, int *k);
 
 int		ft_is_type(int c);
 int		ft_is_flag(int c);
-int		ft_nb_pct(const char *s);
 
 #endif
