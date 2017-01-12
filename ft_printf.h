@@ -22,7 +22,7 @@
 # include "./libft/libft.h"
 
 
-typedef enum			e_length
+typedef enum		e_length
 {
 	no,
 	hh,
@@ -31,9 +31,9 @@ typedef enum			e_length
 	l,
 	j,
 	z
-}						t_length;
+}					t_length;
 
-typedef	struct	s_args
+typedef	struct		s_args
 {
 	int 			start;
 	int 			end;
@@ -52,10 +52,11 @@ typedef	struct	s_args
 	int				precision;
 	int				wildcard_precision;
 	t_length		length;
-	char		type;
-	int			size;
-	int			value;
-}				t_args;
+	char			type;
+	int				size;
+	uintmax_t		u_nb;
+	intmax_t		i_nb;
+}					t_args;
 
 int			ft_printf(const char *format, ...);
 
@@ -67,11 +68,13 @@ int		ft_parsing_length(const char *s, t_args *elem);
 void	ft_parsing_type(const char *s, t_args *elem);
 int		ft_manage_parsing(const char *s, t_args *elem);
 
+void ft_check_type(t_args *elem, int *k, va_list *args);
 
 void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);
 
 int		ft_is_type(int c);
 int		ft_is_flag(int c);
+int		ft_is_signed(int c);
 
 #endif
