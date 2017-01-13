@@ -36,7 +36,7 @@ void ft_hex_basic_two(const char *value, t_args *elem, int *k)
         else if (elem[*k].precision <= ft_strlen(value) &&
             elem[*k].end_space == 0)
             while (i++ < elem[*k].width - elem[*k].precision -
-                (ft_strlen(value) - elem[*k].precision))
+                ((int)ft_strlen(value) - elem[*k].precision))
                 ft_putchar(' ');
         else
         {
