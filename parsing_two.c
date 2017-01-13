@@ -21,11 +21,17 @@ static void ft_put_precision(const char *s, t_args *elem, int *i, int *k)
 		elem[*k].wildcard_precision = 1;
 		elem[*k].ok_precision = 1;
 	}
-	if ((ft_isdigit(s[*i])))
+	else if ((ft_isdigit(s[*i])))
 	{
 		while (ft_isdigit(s[*i]))
 			elem[*k].precision = elem[*k].precision * 10 + (s[(*i)++] - '0');
 		elem[*k].new_start = *i;
+		elem[*k].ok_precision = 1;
+	}
+	else
+	{
+		elem[*k].new_start = *i;
+		elem[*k].precision = 0;
 		elem[*k].ok_precision = 1;
 	}
 }
@@ -46,8 +52,7 @@ int		ft_parsing_precision(const char *s, t_args *elem)
 		if (s[i] == '.')
 		{
 			i++;
-			if (s[i] == '*' || (ft_isdigit(s[i])))
-				ft_put_precision(s, elem, &i, &k);
+			ft_put_precision(s, elem, &i, &k);
 		}
 		k++;
 	}
@@ -117,6 +122,7 @@ void	ft_parsing_type(const char *s, t_args *elem)
 		{
 			elem[k].end = i;
 			elem[k].type = s[i];
+			//ft_printf_struct(elem, &k);
 			k++;
 			i = elem[k].start;
 		}
