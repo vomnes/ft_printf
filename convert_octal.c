@@ -1,7 +1,22 @@
 
 # include "ft_printf.h"
 
-size_t	ft_count_ho(long long int nb, int base)
+int     ft_adapt_o(const char *value, t_args *elem, int *k)
+{
+    if (elem[*k].type == 'o' || elem[*k].type == 'O')
+    {
+        elem[*k].size = ft_strlen(value);
+        if (elem[*k].pre_sign == 1)
+            elem[*k].pre_sign = 0;
+        if (elem[*k].pre_blank == 1)
+            elem[*k].pre_blank = 0;
+        if (elem[*k].pre_hash == 1 && value[0] != '0')
+            elem[*k].size -= 2;
+    }
+    return (0);
+}
+
+size_t	ft_count_ho(unsigned long long int nb, int base)
 {
 	size_t count;
 
@@ -16,14 +31,12 @@ size_t	ft_count_ho(long long int nb, int base)
 	return (count);
 }
 
-int		ft_itoa_octal(long long int nb)
+int		ft_itoa_octal(unsigned long long int nb)
 {
-	long long	int n;
 	int			len;
 	char		str[100];
 
 	ft_bzero(str, 100);
-	n = nb;
 	len = ft_count_ho(nb, 8);
 	if (len > 100)
 		return (-1);
@@ -32,8 +45,8 @@ int		ft_itoa_octal(long long int nb)
 		str[len] = '0';
 	while (len--)
 	{
-		str[len] = (n % 8) + '0';
-		n /= 8;
+		str[len] = (nb % 8) + '0';
+		nb /= 8;
 	}
 	ft_putstr(str);
 	return (0);

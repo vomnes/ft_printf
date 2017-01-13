@@ -22,7 +22,7 @@ int     ft_adapt_x(const char *value, t_args *elem, int *k)
         if (elem[*k].pre_blank == 1)
             elem[*k].pre_blank = 0;
         if (elem[*k].pre_hash == 1 && value[0] != '0')
-            elem[*k].size -= 2;
+            elem[*k].size -= 1;
     }
     return (0);
 }
@@ -101,13 +101,11 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
 	return (0);
 }
 
-int		ft_itoa_hex(long long int nb, char letter_a, int *k, t_args *elem)
+int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem)
 {
-	long long	int n;
 	int			len;
 	char		str[100];
 
-	n = nb;
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 16);
 	if (len > 100)
@@ -115,13 +113,13 @@ int		ft_itoa_hex(long long int nb, char letter_a, int *k, t_args *elem)
 	len--;
 	if (nb == 0)
 		str[len] = '0';
-	while (n)
+	while (nb)
 	{
-		if (n % 16 <= 9)
-			str[len--] = (n % 16) + '0';
+		if (nb % 16 <= 9)
+			str[len--] = (nb % 16) + '0';
 		else
-			str[len--] = (n % 16) + letter_a - 10;
-		n /= 16;
+			str[len--] = (nb % 16) + letter_a - 10;
+		nb /= 16;
 	}
 	ft_manage_hex(str, elem, letter_a == 'a' ? "0x" : "0X", k);
 	return (0);
