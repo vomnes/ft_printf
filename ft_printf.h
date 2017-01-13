@@ -21,7 +21,6 @@
 # include <locale.h>
 # include "./libft/libft.h"
 
-
 typedef enum		e_length
 {
 	no,
@@ -68,6 +67,17 @@ int		ft_parsing_length(const char *s, t_args *elem);
 void	ft_parsing_type(const char *s, t_args *elem);
 int		ft_manage_parsing(const char *s, t_args *elem);
 
+void 	ft_hex_basic_one(const char *value, t_args *elem, int *k);
+void 	ft_hex_basic_two(const char *value, t_args *elem, int *k);
+void 	ft_hex_hash(const char *value, t_args *elem, int *k);
+void 	ft_hex_zero_one(const char *value, t_args *elem, int *k);
+size_t	ft_count_ho(long long int nb, int base);
+int		ft_itoa_hex(long long int nb, char letter_a, int *k, t_args *elem);
+int		ft_itoa_octal(long long int nb);
+
+int 	ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
+
+
 void ft_check_type(t_args *elem, int *k, va_list *args);
 
 void ft_init_struct(t_args *elem, int *k);
@@ -76,5 +86,6 @@ void ft_printf_struct(t_args *elem, int *k);
 int		ft_is_type(int c);
 int		ft_is_flag(int c);
 int		ft_is_signed(int c);
+int		ft_is_length(int c);
 
 #endif
