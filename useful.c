@@ -40,6 +40,11 @@ int		ft_is_signed(int c)
 	return (c == 'D' || c == 'd' || c == 'i');
 }
 
+int		ft_is_length(int c)
+{
+	return (c == 'h' || c == 'l' || c == 'j' || c == 'z');
+}
+
 void ft_printf_struct(t_args *elem, int *k)
 {
     ft_putchar('\n');
