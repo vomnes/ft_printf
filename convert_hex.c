@@ -22,7 +22,7 @@ int     ft_adapt_x(const char *value, t_args *elem, int *k)
         if (elem[*k].pre_blank == 1)
             elem[*k].pre_blank = 0;
         if (elem[*k].pre_hash == 1 && value[0] != '0')
-            elem[*k].size -= 1;
+            elem[*k].size -= 2;
     }
     return (0);
 }
