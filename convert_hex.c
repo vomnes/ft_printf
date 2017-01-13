@@ -12,22 +12,96 @@
 
 #include "ft_printf.h"
 
-static size_t	ft_count_ho(long long int nb, int base)
+int     ft_adapt_x(const char *value, t_args *elem, int *k)
 {
-	size_t count;
-
-	count = 0;
-	if (nb == 0)
-		return (1);
-	while (nb)
-	{
-		nb /= base;
-		count++;
-	}
-	return (count);
+    if (elem[*k].type == 'x' || elem[*k].type == 'X')
+    {
+        elem[*k].size = ft_strlen(value);
+        if (elem[*k].pre_sign == 1)
+            elem[*k].pre_sign = 0;
+        if (elem[*k].pre_blank == 1)
+            elem[*k].pre_blank = 0;
+        if (elem[*k].pre_hash == 1 && value[0] != '0')
+            elem[*k].size -= 2;
+    }
+    return (0);
 }
 
-int		ft_itoa_hex(long long int nb, char letter_a)
+void ft_hex_zero_two(const char *value, t_args *elem, int *k)
+{
+    int i;
+
+    i = 0;
+    if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 1 &&
+        elem[*k].ok_width == 0)
+        while (i++ < elem[*k].precision - elem[*k].size)
+            ft_putchar('0');
+    if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 1 &&
+        elem[*k].ok_width == 1)
+    {
+        if (elem[*k].width <= elem[*k].precision)
+            while (i++ < elem[*k].precision - elem[*k].size)
+                ft_putchar('0');
+        else
+        {
+            while (i++ < elem[*k].width - elem[*k].precision)
+                ft_putchar('0');
+            while (i++ < elem[*k].precision - elem[*k].size)
+                ft_putchar('0');
+        }
+    }
+}
+
+void ft_hex_end_space(const char *value, t_args *elem, int *k)
+{
+    int i;
+
+    i = 0;
+    if (elem[*k].end_space == 1 && elem[*k].ok_width == 1 &&
+        elem[*k].ok_precision == 0)
+        while (i++ < elem[*k].width - elem[*k].size - ((elem[*k].pre_hash == 1
+            && value[0] != '0') ? ((int)ft_strlen(value) + 2) : 0))
+            ft_putchar(' ');
+    if ((elem[*k].end_space) && (elem[*k].ok_width) && (elem[*k].ok_precision))
+    {
+        if (elem[*k].width > elem[*k].precision)
+        {
+            if (elem[*k].precision <= ft_strlen(value))
+                while (i++ < elem[*k].width - elem[*k].precision -
+                ((int)ft_strlen(value) - elem[*k].precision) -
+                ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
+                    ft_putchar(' ');
+            else
+                while (i++ < elem[*k].width - elem[*k].precision -
+                ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
+                    ft_putchar(' ');
+        }
+    }
+}
+
+int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
+{
+	ft_adapt_x(value, elem, k);
+    ft_hex_basic_one(value, elem, k);
+    ft_hex_basic_two(value, elem, k);
+    ft_hex_hash(value, elem, k);
+	if (elem[*k].pre_hash == 1 && elem[*k].u_nb != 0)
+		ft_putstr(prefix);
+    ft_hex_zero_one(value, elem, k);
+    ft_hex_zero_two(value, elem, k);
+    if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && elem[*k].ok_width == 0 && value[0] == '0')
+        ;
+    else if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && elem[*k].ok_width == 1 && value[0] == '0')
+        ft_putchar(' ');
+    else if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1 && value[0] == '0')
+        ft_putchar('0');
+    else
+        ft_putstr(value);
+    ft_hex_end_space(value, elem, k);
+	return (0);
+}
+
+int		ft_itoa_hex(long long int nb, char letter_a, int *k, t_args *elem)
 {
 	long long	int n;
 	int			len;
@@ -49,29 +123,6 @@ int		ft_itoa_hex(long long int nb, char letter_a)
 			str[len--] = (n % 16) + letter_a - 10;
 		n /= 16;
 	}
-	ft_putstr(str);
-	return (0);
-}
-
-int		ft_itoa_octal(long long int nb)
-{
-	long long	int n;
-	int			len;
-	char		str[100];
-
-	ft_bzero(str, 100);
-	n = nb;
-	len = ft_count_ho(nb, 8);
-	if (len > 100)
-		return (-1);
-	str[len + 1] = '\0';
-	if (nb == 0)
-		str[len] = '0';
-	while (len--)
-	{
-		str[len] = (n % 8) + '0';
-		n /= 8;
-	}
-	ft_putstr(str);
+	ft_manage_hex(str, elem, letter_a == 'a' ? "0x" : "0X", k);
 	return (0);
 }
