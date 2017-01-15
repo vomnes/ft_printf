@@ -106,7 +106,7 @@ int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem)
 	int			len;
 	char		str[100];
 
-	ft_bzero(str, 100);
+	ft_strclr((char*)str);
 	len = ft_count_ho(nb, 16);
 	if (len > 100)
 		return (-1);
