@@ -117,7 +117,7 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 	int 		zero;
 
 	zero = ((nb == 0) ? 1 : 0);
-	ft_strclr((char*)str);
+	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 8);
 	if (len > 100)
 		return (-1);
