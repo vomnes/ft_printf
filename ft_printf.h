@@ -91,7 +91,14 @@ int		ft_itoa_ptr(unsigned long long int nb, int *k, t_args *elem);
 
 int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem);
 
+void ft_signed_end_space(char const *value, t_args *elem, int *k);
+void ft_put_signed_zeroes(char const *value, t_args *elem, int *k);
+void ft_put_signed_space(char const *value, int *k, t_args *elem);
+void ft_put_signed_end_space(char const *value, int *k, t_args *elem);
 int		ft_itoa_signed(long long int nb, int *k, t_args *elem);
+
+int		ft_print_string(char *value, int *k, t_args *elem);
+int		ft_print_char(int value, int *k, t_args *elem);
 
 void ft_check_type(t_args *elem, int *k, va_list *args);
 
