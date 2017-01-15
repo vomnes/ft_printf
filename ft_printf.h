@@ -54,7 +54,8 @@ typedef	struct		s_args
 	char			type;
 	int				size;
 	uintmax_t		u_nb;
-	intmax_t		i_nb;
+	int64_t			i_nb;
+	int 			neg;
 }					t_args;
 
 int			ft_printf(const char *format, ...);
@@ -73,7 +74,7 @@ void 	ft_hex_hash(const char *value, t_args *elem, int *k);
 void 	ft_hex_zero_one(const char *value, t_args *elem, int *k);
 size_t	ft_count_ho(unsigned long long int nb, int base);
 int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem);
-int 	ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k);
+int 	ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
 
 int     ft_adapt_octal(const char *value, t_args *elem, int *k);
 void ft_octal_basic_one(const char *value, t_args *elem, int *k);
@@ -81,9 +82,16 @@ void ft_octal_basic_two(const char *value, t_args *elem, int *k);
 void ft_octal_hash(const char *value, t_args *elem, int *k);
 void ft_octal_zero_one(const char *value, t_args *elem, int *k);
 int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k);
+int 	ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k);
 
-int 	ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
+void ft_ptr_basic_one(const char *value, t_args *elem, int *k);
+void ft_ptr_basic_two(const char *value, t_args *elem, int *k);
+void ft_ptr_zero_one(const char *value, t_args *elem, int *k);
+int		ft_itoa_ptr(unsigned long long int nb, int *k, t_args *elem);
 
+int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem);
+
+int		ft_itoa_signed(long long int nb, int *k, t_args *elem);
 
 void ft_check_type(t_args *elem, int *k, va_list *args);
 
