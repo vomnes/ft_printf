@@ -30,7 +30,7 @@ int		ft_print_wchar(wchar_t value, int *k, t_args *elem)
     ft_putwchar_all(value);
     i = 0;
     if (elem[*k].end_space == 1 && elem[*k].ok_width == 1)
-        while (i++ < elem[*k].width - 1)
+        while (i++ < elem[*k].width - (int)ft_sizewchar(value))
             ft_putchar(' ');
 	return (0);
 }

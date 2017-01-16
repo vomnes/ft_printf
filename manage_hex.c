@@ -88,7 +88,7 @@ void ft_hex_hash(const char *value, t_args *elem, int *k)
         else
         {
             while (i++ < elem[*k].width - elem[*k].precision -
-            (int)ft_strlen(value))
+            ((value[0] != '0') ? 2 : 1))
                 ft_putchar(' ');
             if (elem[*k].width >= elem[*k].precision && value[0] == '0')
                 ft_putchar(' ');
