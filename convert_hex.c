@@ -39,17 +39,18 @@ void ft_hex_zero_two(const char *value, t_args *elem, int *k)
     if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 1 &&
         elem[*k].ok_width == 1)
     {
-        if (elem[*k].width <= elem[*k].precision)
-            while (i++ < elem[*k].precision - elem[*k].size)
+        if (elem[*k].width <= elem[*k].precision )
+            while (i++ < elem[*k].precision - (int)ft_strlen(value))
                 ft_putchar('0');
         else
-        {
-            while (i++ < elem[*k].width - elem[*k].precision)
+            while (i++ < elem[*k].precision - (int)ft_strlen(value))
                 ft_putchar('0');
-            while (i++ < elem[*k].precision - elem[*k].size)
-                ft_putchar('0');
-        }
     }
+    if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 0 &&
+        elem[*k].ok_width == 1)
+        while (i++ < elem[*k].width - (int)ft_strlen(value) -
+        ((elem[*k].pre_hash == 1) ? 2 : 0))
+            ft_putchar('0');
 }
 
 void ft_hex_end_space(const char *value, t_args *elem, int *k)
@@ -58,9 +59,9 @@ void ft_hex_end_space(const char *value, t_args *elem, int *k)
 
     i = 0;
     if (elem[*k].end_space == 1 && elem[*k].ok_width == 1 &&
-        elem[*k].ok_precision == 0)
-        while (i++ < elem[*k].width - elem[*k].size - ((elem[*k].pre_hash == 1
-            && value[0] != '0') ? ((int)ft_strlen(value) + 2) : 0))
+        elem[*k].ok_precision == 0 && elem[*k].pre_zero == 0)
+        while (i++ < elem[*k].width - (int)ft_strlen(value) -
+        ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
             ft_putchar(' ');
     if ((elem[*k].end_space) && (elem[*k].ok_width) && (elem[*k].ok_precision))
     {
@@ -89,11 +90,14 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
 		ft_putstr(prefix);
     ft_hex_zero_one(value, elem, k);
     ft_hex_zero_two(value, elem, k);
-    if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && elem[*k].ok_width == 0 && value[0] == '0')
+    if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    elem[*k].ok_width == 0 && value[0] == '0')
         ;
-    else if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && elem[*k].ok_width == 1 && value[0] == '0')
+    else if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    elem[*k].ok_width == 1 && value[0] == '0')
         ft_putchar(' ');
-    else if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1 && value[0] == '0')
+    else if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1 &&
+    value[0] == '0')
         ft_putchar('0');
     else
         ft_putstr(value);
@@ -101,7 +105,7 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
 	return (0);
 }
 
-int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem)
+int		ft_itoa_hex(unsigned long long int nb, char A_a, int *k, t_args *elem)
 {
 	int			len;
 	char		str[100];
@@ -118,9 +122,9 @@ int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem)
 		if (nb % 16 <= 9)
 			str[len--] = (nb % 16) + '0';
 		else
-			str[len--] = (nb % 16) + letter_a - 10;
+			str[len--] = (nb % 16) + A_a - 10;
 		nb /= 16;
 	}
-	ft_manage_hex(str, elem, letter_a == 'a' ? "0x" : "0X", k);
+	ft_manage_hex(str, elem, A_a == 'a' ? "0x" : "0X", k);
 	return (0);
 }
