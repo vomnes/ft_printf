@@ -11,22 +11,36 @@ int		ft_manage_parsing(const char *s, t_args *elem)
 	return (0);
 }
 
+void ft_printf_area(char const *format, int *i, int *y)
+{
+	while (*i < *y && format[*i] != '\0')
+		ft_putchar(format[(*i)++]);
+}
+
 int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
 {
     int i;
 	int k;
+	int ret;
 
     i = 0;
 	k = 0;
+	ret = 0;
 	ft_manage_parsing(format, elem);
     while (format[i] != '\0')
     {
 		if (format[i] == '%' && format[i + 1] == '%')
 			i++;
-        if (i == elem[k].start)
+        if (i == elem[k].start && elem[k].ok_start == 1)
         {
-			ft_check_type(elem, &k, args);
+			ret = ft_check_type(elem, &k, args);
+			if (ret == -1)
+				return (-1);
+		//	ft_putchar('.');
 			i = elem[k].end;
+		//	ft_putnbr(elem[k].end);
+			k++;
+		//	ft_putnbr(elem[k].ok_start);
         }
 		else
         	ft_putchar(format[i]);
@@ -42,10 +56,19 @@ int			ft_printf(const char *format, ...)
     t_args *elem;
     int len;
 
-    if (!(elem = ft_memalloc(sizeof(t_args) * 10)))
+	if (*format == '\0')
+		return (0);
+	ft_putnbr(ft_nb_pct(format));
+	ft_putchar('\n');
+    if (!(elem = ft_memalloc(sizeof(t_args) * ft_nb_pct(format))))
 	   return (-1);
     va_start(args, format);
-    ft_printf_run(format, elem, &args, &len);
+    if (ft_printf_run(format, elem, &args, &len) == -1)
+	{
+		free(elem);
+		return (-1);
+		exit (-1);
+	}
     va_end(args);
 	free(elem);
     return (len);
