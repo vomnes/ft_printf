@@ -30,12 +30,7 @@ int		ft_itoa_ptr(unsigned long long int nb, int *k, t_args *elem)
 	char		str[100];
 
 	ft_bzero(str, 100);
-    str[0] = '7';
-    str[1] = 'f';
-    str[2] = 'f';
-    str[3] = 'f';
 	len = ft_count_ho(nb, 16);
-    len += 4;
 	if (len > 100)
 		return (-1);
 	len--;

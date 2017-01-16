@@ -6,7 +6,6 @@ static intmax_t ft_get_signed(t_args *elem, int *k, va_list *args)
 
     nbr = va_arg(*args, intmax_t);
     elem[*k].i_nb = (int64_t)nbr;
-    //printf("get: %d\n", (int)nbr);
     if (elem[*k].length == hh)
         return ((char)nbr);
     else if (elem[*k].length == h)
@@ -43,16 +42,21 @@ static uintmax_t ft_get_unsigned(t_args *elem, int *k, va_list *args)
     return ((unsigned int)nbr);
 }
 
-void ft_check_type(t_args *elem, int *k, va_list *args)
+int ft_check_type(t_args *elem, int *k, va_list *args)
 {
 	if (elem[*k].type == 's')
 		ft_print_string(va_arg(*args, char *), k, elem);
 	if (elem[*k].type == 'c')
 		ft_print_char(va_arg(*args, int), k, elem);
-//	if (elem[*k].type == 'C')
-//        my_C = va_arg(*args, wchar_t);
+	if (elem[*k].type == 'C')
+    {
+        if (ft_print_wchar(va_arg(*args, wchar_t), k, elem) == -1)
+            return (-1);
+        else
+            return (1);
+    }
 	if (elem[*k].type == 'S')
-		ft_putwstr(va_arg(*args, wchar_t*));
+		ft_print_wstr(va_arg(*args, wchar_t*), k, elem);
 	if (ft_is_signed(elem[*k].type))
 		ft_itoa_signed(ft_get_signed(elem, k, args), k, elem);
 	if (elem[*k].type == 'U' || elem[*k].type == 'u')
@@ -62,7 +66,8 @@ void ft_check_type(t_args *elem, int *k, va_list *args)
 	if (elem[*k].type == 'x')
 		ft_itoa_hex(ft_get_unsigned(elem, k, args), 'a', k, elem);
 	if (elem[*k].type == 'p')
-		ft_itoa_ptr(ft_get_unsigned(elem, k, args), k, elem);
+		ft_itoa_ptr(va_arg(*args, unsigned long long int), k, elem);
 	if (elem[*k].type == 'o' || elem[*k].type == 'O')
 		ft_itoa_octal(ft_get_unsigned(elem, k, args), elem, k);
+    return (0);
 }
