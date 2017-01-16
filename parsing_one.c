@@ -27,10 +27,11 @@ int		ft_parsing_start(const char *s, t_args *elem)
 			i++;
 		if (is_arg == 1 && ft_is_type(s[i]) == 1)
 			is_arg = 0;
-		if (s[i] == '%' && s[i + 1] != '%' && is_arg == 0)
+		if (s[i - 1] != '%' && s[i] == '%' && s[i + 1] != '%' && is_arg == 0)
 		{
 			ft_init_struct(elem, &k);
 			elem[k].start = i;
+			elem[k].ok_start = 1;
 			is_arg = 1;
 			k++;
 		}

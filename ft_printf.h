@@ -35,6 +35,7 @@ typedef enum		e_length
 typedef	struct		s_args
 {
 	int 			start;
+	int 			ok_start;
 	int 			end;
 	int 			new_start;
 	int				nb_arg;
@@ -81,6 +82,8 @@ void ft_octal_basic_one(const char *value, t_args *elem, int *k);
 void ft_octal_basic_two(const char *value, t_args *elem, int *k);
 void ft_octal_hash(const char *value, t_args *elem, int *k);
 void ft_octal_zero_one(const char *value, t_args *elem, int *k);
+void ft_octal_zero_two(const char *value, t_args *elem, int *k);
+void ft_octal_end_space(const char *value, t_args *elem, int *k);
 int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k);
 int 	ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k);
 
@@ -99,8 +102,12 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem);
 
 int		ft_print_string(char *value, int *k, t_args *elem);
 int		ft_print_char(int value, int *k, t_args *elem);
+size_t		ft_sizewchar(wchar_t wc);
+int		ft_putwchar_all(wchar_t wc);
+int		ft_print_wchar(wchar_t value, int *k, t_args *elem);
+void	ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
-void ft_check_type(t_args *elem, int *k, va_list *args);
+int  ft_check_type(t_args *elem, int *k, va_list *args);
 
 void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);

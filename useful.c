@@ -4,6 +4,7 @@ void ft_init_struct(t_args *elem, int *k)
 {
     ft_bzero(elem[*k].prefix, 3);
 	elem[*k].start = 0;
+    elem[*k].ok_start = 0;
 	elem[*k].end = 0;
 	elem[*k].new_start = 0;
 	elem[*k].nb_arg = 0;
