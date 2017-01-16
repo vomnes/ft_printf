@@ -3,22 +3,24 @@
 static void ft_string_pre(int *len, int *k, t_args *elem)
 {
     int i;
+    char space;
 
     i = 0;
+    space = (elem[*k].pre_zero == 0) ? ' ' : '0';
     if (elem[*k].end_space == 0)
     {
         if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1)
         {
             if (elem[*k].precision < *len)
                 while (i++ < elem[*k].width - elem[*k].precision)
-                    ft_putchar((elem[*k].pre_zero == 0) ? ' ' : '0');
+                    ft_putchar(space);
             else
                 while (i++ < elem[*k].width - *len)
-                    ft_putchar((elem[*k].pre_zero == 0) ? ' ' : '0');
+                    ft_putchar(space);
         }
         else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
             while (i++ < elem[*k].width - *len)
-                ft_putchar(' ');
+                ft_putchar(space);
     }
 }
 
