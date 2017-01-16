@@ -48,6 +48,8 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
 		ft_print_string(va_arg(*args, char *), k, elem);
 	if (elem[*k].type == 'c')
 		ft_print_char(va_arg(*args, int), k, elem);
+    if (elem[*k].type == '%')
+		ft_print_char('%', k, elem);
 	if (elem[*k].type == 'C')
     {
         if (ft_print_wchar(va_arg(*args, wchar_t), k, elem) == -1)
