@@ -72,7 +72,7 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
         if ((elem[*k].precision <= (int)ft_strlen(value)) &&
         elem[*k].end_space == 0)
             while (i++ < elem[*k].width - (int)ft_strlen(value))
-                ft_putchar(' ');
+                ft_putchar((elem[*k].pre_zero == 0) ? ' ' : '0');
     if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 0)
         if (elem[*k].precision > (int)ft_strlen(value))
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
