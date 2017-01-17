@@ -44,14 +44,18 @@ static uintmax_t ft_get_unsigned(t_args *elem, int *k, va_list *args)
 
 int ft_check_type(t_args *elem, int *k, va_list *args)
 {
+    int ret;
+
+    ret = 0;
     if (elem[*k].ok_width == 1 && elem[*k].wildcard_width == 1)
         elem[*k].width = va_arg(*args, int);
     if (elem[*k].ok_precision == 1 && elem[*k].wildcard_precision == 1)
         elem[*k].precision = va_arg(*args, int);
+
 	if (elem[*k].type == 's')
-		ft_print_string(va_arg(*args, char *), k, elem);
+		ret = ft_print_string(va_arg(*args, char *), k, elem);
 	if (elem[*k].type == 'c')
-		ft_print_char(va_arg(*args, int), k, elem);
+		ret = ft_print_char(va_arg(*args, int), k, elem);
     if (elem[*k].type == '%')
 		ft_print_char('%', k, elem);
 	if (elem[*k].type == 'C')
@@ -62,9 +66,9 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
             return (1);
     }
 	if (elem[*k].type == 'S')
-		ft_print_wstr(va_arg(*args, wchar_t*), k, elem);
+		ret = ft_print_wstr(va_arg(*args, wchar_t*), k, elem);
 	if (ft_is_signed(elem[*k].type))
-		ft_itoa_signed(ft_get_signed(elem, k, args), k, elem);
+		ret = ft_itoa_signed(ft_get_signed(elem, k, args), k, elem);
 	if (elem[*k].type == 'U' || elem[*k].type == 'u')
 		ft_itoa_unsigned(ft_get_unsigned(elem, k, args), k, elem);
 	if (elem[*k].type == 'X')
@@ -75,5 +79,5 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
 		ft_itoa_ptr(va_arg(*args, unsigned long long int), k, elem);
 	if (elem[*k].type == 'o' || elem[*k].type == 'O')
 		ft_itoa_octal(ft_get_unsigned(elem, k, args), elem, k);
-    return (0);
+    return (ret);
 }
