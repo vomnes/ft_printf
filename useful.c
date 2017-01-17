@@ -14,7 +14,6 @@
 
 void ft_init_struct(t_args *elem, int *k)
 {
-    ft_bzero(elem[*k].prefix, 3);
 	elem[*k].start = 0;
     elem[*k].ok_start = 0;
 	elem[*k].end = 0;
@@ -32,8 +31,10 @@ void ft_init_struct(t_args *elem, int *k)
     elem[*k].precision = 0;
 	elem[*k].wildcard_precision = 0;
 	elem[*k].type = 0;
+    elem[*k].size = 0;
 	elem[*k].i_nb = 0;
 	elem[*k].u_nb = 1;
+    elem[*k].neg = 0;
 }
 
 size_t	ft_nb_pct(const char *s)
@@ -94,9 +95,6 @@ int		ft_is_length(int c)
 
 void ft_printf_struct(t_args *elem, int *k)
 {
-    ft_putchar('\n');
-    //ft_putstr("elem->prefix:  ");
-    ft_putendl(elem[*k].prefix);
     ft_putstr("#:  ");
     ft_putnbr(elem[*k].pre_hash);
     ft_putchar('\n');

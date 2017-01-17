@@ -39,7 +39,6 @@ typedef	struct		s_args
 	int 			end;
 	int 			new_start;
 	int				nb_arg;
-	char			prefix[3];
 	int				pre_hash;
 	int				pre_zero;
 	int				end_space;
@@ -47,8 +46,8 @@ typedef	struct		s_args
 	int				pre_blank;
 	int				ok_width;
 	int				width;
-	int				ok_precision;
 	int				wildcard_width;
+	int				ok_precision;
 	int				precision;
 	int				wildcard_precision;
 	t_length		length;
@@ -100,8 +99,6 @@ void ft_put_signed_space(char const *value, int *k, t_args *elem);
 void ft_put_signed_end_space(char const *value, int *k, t_args *elem);
 int		ft_itoa_signed(long long int nb, int *k, t_args *elem);
 
-void ft_string_pre(int *len, int *k, t_args *elem);
-void ft_string_end_space(int *len, int *k, t_args *elem);
 int		ft_print_string(char *value, int *k, t_args *elem);
 int		ft_print_char(int value, int *k, t_args *elem);
 size_t		ft_sizewchar(wchar_t wc);

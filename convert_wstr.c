@@ -51,7 +51,7 @@ int	ft_wstrnlen(const wchar_t *wc, size_t n)
     return (i);
 }
 
-void ft_wstr_pre(const wchar_t *value, int *len, int *k, t_args *elem)
+static void ft_wstr_pre(const wchar_t *value, int *len, int *k, t_args *elem)
 {
     int i;
     char space;
@@ -80,6 +80,28 @@ void ft_wstr_pre(const wchar_t *value, int *len, int *k, t_args *elem)
         else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
             while (i++ < elem[*k].width - *len)
                 ft_putchar(space);
+    }
+}
+
+static void ft_wstr_end_space(int *len, int *k, t_args *elem)
+{
+    int i;
+
+    i = 0;
+    if (elem[*k].end_space == 1)
+    {
+        if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1)
+        {
+            if (elem[*k].precision < *len)
+                while (i++ < elem[*k].width - elem[*k].precision)
+                    ft_putchar(' ');
+            else
+                while (i++ < elem[*k].width - *len)
+                    ft_putchar(' ');
+        }
+        else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
+            while (i++ < elem[*k].width - *len)
+                ft_putchar(' ');
     }
 }
 
@@ -125,6 +147,6 @@ int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem)
             ft_putstr("(null)");
     }
     i = 0;
-    ft_string_end_space(&len, k, elem);
+    ft_wstr_end_space(&len, k, elem);
     return (len);
 }
