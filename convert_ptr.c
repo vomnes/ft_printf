@@ -27,10 +27,12 @@ int ft_manage_ptr(const char *value, t_args *elem, int *k)
 int		ft_itoa_ptr(unsigned long long int nb, int *k, t_args *elem)
 {
 	int			len;
+    int         tmp_len;
 	char		str[100];
 
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 16);
+    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	len--;
@@ -45,5 +47,5 @@ int		ft_itoa_ptr(unsigned long long int nb, int *k, t_args *elem)
 		nb /= 16;
 	}
 	ft_manage_ptr(str, elem, k);
-	return (0);
+	return (tmp_len + 2);
 }

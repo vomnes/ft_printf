@@ -62,12 +62,14 @@ size_t	ft_count_ho(unsigned long long int nb, int base)
 int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 {
 	int			len;
+    int         tmp_len;
 	char		str[100];
 	int 		zero;
 
 	zero = ((nb == 0) ? 1 : 0);
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 8);
+    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	str[len + 1] = '\0';
@@ -84,5 +86,5 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 		str[0] = '0';
 	}
 	ft_manage_octal(str, elem, "0", k);
-	return (0);
+	return (tmp_len + ((elem[*k].pre_hash == 1) ? 1 : 0));
 }

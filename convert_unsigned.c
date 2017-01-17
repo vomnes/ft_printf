@@ -94,10 +94,12 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
 int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)
 {
 	int			len;
+    int         tmp_len;
 	char		str[100];
 
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 10);
+    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	len--;
@@ -109,5 +111,5 @@ int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)
 		nb /= 10;
 	}
 	ft_manage_unsigned(str, elem, k);
-	return (0);
+	return (tmp_len);
 }
