@@ -88,7 +88,7 @@ static void ft_put_width(const char *s, t_args *elem, int *i, int *k)
 {
 	if (s[*i] == '*')
 	{
-		i++;
+		(*i)++;
 		elem[*k].new_start = *i;
 		elem[*k].wildcard_width = 1;
 		elem[*k].ok_width = 1;

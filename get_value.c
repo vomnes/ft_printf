@@ -44,6 +44,10 @@ static uintmax_t ft_get_unsigned(t_args *elem, int *k, va_list *args)
 
 int ft_check_type(t_args *elem, int *k, va_list *args)
 {
+    if (elem[*k].ok_width == 1 && elem[*k].wildcard_width == 1)
+        elem[*k].width = va_arg(*args, int);
+    if (elem[*k].ok_precision == 1 && elem[*k].wildcard_precision == 1)
+        elem[*k].precision = va_arg(*args, int);
 	if (elem[*k].type == 's')
 		ft_print_string(va_arg(*args, char *), k, elem);
 	if (elem[*k].type == 'c')
