@@ -13,7 +13,7 @@ int		ft_print_char(int value, int *k, t_args *elem)
     if (elem[*k].end_space == 1 && elem[*k].ok_width == 1)
         while (i++ < elem[*k].width - 1)
             ft_putchar(' ');
-	return (0);
+	return (1);
 }
 
 int		ft_print_wchar(wchar_t value, int *k, t_args *elem)
@@ -32,10 +32,10 @@ int		ft_print_wchar(wchar_t value, int *k, t_args *elem)
     if (elem[*k].end_space == 1 && elem[*k].ok_width == 1)
         while (i++ < elem[*k].width - (int)ft_sizewchar(value))
             ft_putchar(' ');
-	return (0);
+	return ((int)ft_sizewchar(value));
 }
 
-void		ft_print_wstr(const wchar_t *value, int *k, t_args *elem)
+int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem)
 {
     int i;
     int len;
@@ -61,4 +61,5 @@ void		ft_print_wstr(const wchar_t *value, int *k, t_args *elem)
     if (elem[*k].end_space == 1 && elem[*k].ok_width == 1)
         while (i++ < elem[*k].width - len)
             ft_putchar(' ');
+    return (len);
 }
