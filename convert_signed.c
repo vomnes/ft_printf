@@ -83,5 +83,6 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
 	}
     ft_get_min(nb, str);
 	ft_manage_signed(str, elem, k);
-	return (ft_count(nb) + ((nb < 0) ? 1 : 0) + ((elem[*k].pre_sign || elem[*k].pre_blank) ? 1 : 0));
+	return (ft_count(nb) + ((nb < 0) ? 1 : 0) +
+    ((elem[*k].pre_sign || elem[*k].pre_blank) ? 1 : 0));
 }
