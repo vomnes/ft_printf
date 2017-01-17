@@ -1,6 +1,6 @@
 # include "ft_printf.h"
 
-static void ft_string_pre(int *len, int *k, t_args *elem)
+void ft_string_pre(int *len, int *k, t_args *elem)
 {
     int i;
     char space;
@@ -24,7 +24,7 @@ static void ft_string_pre(int *len, int *k, t_args *elem)
     }
 }
 
-static void ft_string_end_space(int *len, int *k, t_args *elem)
+void ft_string_end_space(int *len, int *k, t_args *elem)
 {
     int i;
 
