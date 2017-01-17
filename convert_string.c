@@ -73,5 +73,5 @@ int		ft_print_string(char *value, int *k, t_args *elem)
             ft_putstr("(null)");
     }
     ft_string_end_space(&len, k, elem);
-	return (0);
+	return (len);
 }

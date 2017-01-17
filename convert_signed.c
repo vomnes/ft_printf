@@ -50,11 +50,11 @@ static void ft_get_min(long long int nb, char const *str)
     }
 }
 
-static void ft_get_neg_len(long long int *nb, int *len, t_args *el, int *k)
+static int ft_get_neg_len(long long int *nb, t_args *el, int *k)
 {
     if (*nb < 0)
         el[*k].neg = -1;
-    *len = ft_count(*nb) + ((*nb < 0) ? 1 : 0);
+    return (ft_count(*nb) + ((*nb < 0) ? 1 : 0));
 }
 
 int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
@@ -65,7 +65,7 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
 
     n = nb;
 	ft_bzero(str, 100);
-    ft_get_neg_len(&nb, &len, elem, k);
+    len = ft_get_neg_len(&nb, elem, k);
     if (len > 100)
         return (-1);
     if (nb < 0)
@@ -83,5 +83,5 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
 	}
     ft_get_min(nb, str);
 	ft_manage_signed(str, elem, k);
-	return (0);
+	return (ft_count(nb) + ((nb < 0) ? 1 : 0) + ((elem[*k].pre_sign || elem[*k].pre_blank) ? 1 : 0));
 }
