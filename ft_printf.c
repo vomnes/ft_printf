@@ -121,7 +121,7 @@ int			ft_printf(const char *format, ...)
     t_args *elem;
     int len;
 
-	if (format == NULL || *format == '\0')
+	if (*format == '\0')
 		return (0);
     if (!(elem = ft_memalloc(sizeof(t_args) * ft_nb_pct(format))))
 	   return (-1);
