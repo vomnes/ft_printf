@@ -23,9 +23,11 @@ int		ft_parsing_start(const char *s, t_args *elem)
 	is_arg = 0;
 	while (s[i] != '\0')
 	{
-		if ((is_arg == 1 && s[i] == '%') || (s[i] == '%' && s[i + 1] == '%'))
+		if (s[i] == '%' && s[i + 1] == '%')
 			i++;
-		if (is_arg == 1 && ft_is_type(s[i]) == 1)
+		if (is_arg == 1 && s[i] == '%')
+			i += 2;
+		if (is_arg == 1 && ft_is_type(s[i]))
 			is_arg = 0;
 		if (s[i - 1] != '%' && s[i] == '%' && s[i + 1] != '%' && is_arg == 0)
 		{

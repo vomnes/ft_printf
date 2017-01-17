@@ -124,7 +124,6 @@ void	ft_parsing_type(const char *s, t_args *elem)
 			elem[k].type = s[i];
 			//ft_printf_struct(elem, &k);
 			k++;
-			i = elem[k].start;
 		}
 		i++;
 	}

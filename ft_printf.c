@@ -36,11 +36,8 @@ int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
 			ret = ft_check_type(elem, &k, args);
 			if (ret == -1)
 				return (-1);
-		//	ft_putchar('.');
 			i = elem[k].end;
-		//	ft_putnbr(elem[k].end);
 			k++;
-		//	ft_putnbr(elem[k].ok_start);
         }
 		else
         	ft_putchar(format[i]);
@@ -58,8 +55,6 @@ int			ft_printf(const char *format, ...)
 
 	if (*format == '\0')
 		return (0);
-	ft_putnbr(ft_nb_pct(format));
-	ft_putchar('\n');
     if (!(elem = ft_memalloc(sizeof(t_args) * ft_nb_pct(format))))
 	   return (-1);
     va_start(args, format);
