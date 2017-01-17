@@ -100,12 +100,15 @@ void ft_put_signed_space(char const *value, int *k, t_args *elem);
 void ft_put_signed_end_space(char const *value, int *k, t_args *elem);
 int		ft_itoa_signed(long long int nb, int *k, t_args *elem);
 
+void ft_string_pre(int *len, int *k, t_args *elem);
+void ft_string_end_space(int *len, int *k, t_args *elem);
 int		ft_print_string(char *value, int *k, t_args *elem);
 int		ft_print_char(int value, int *k, t_args *elem);
 size_t		ft_sizewchar(wchar_t wc);
 int		ft_putwchar_all(wchar_t wc);
+void	ft_putnwstr(const wchar_t *wc, size_t n);
 int		ft_print_wchar(wchar_t value, int *k, t_args *elem);
-void	ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
+int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
 int  ft_check_type(t_args *elem, int *k, va_list *args);
 
@@ -113,8 +116,10 @@ void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);
 
 int		ft_is_type(int c);
+int		ft_is_type_less_pct(int c);
 int		ft_is_flag(int c);
 int		ft_is_signed(int c);
 int		ft_is_length(int c);
+size_t	ft_nb_pct(const char *s);
 
 #endif

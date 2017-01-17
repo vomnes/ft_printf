@@ -82,7 +82,7 @@ int		ft_is_length(int c)
 
 void ft_printf_struct(t_args *elem, int *k)
 {
-/*    ft_putchar('\n');
+    ft_putchar('\n');
     //ft_putstr("elem->prefix:  ");
     ft_putendl(elem[*k].prefix);
     ft_putstr("#:  ");
@@ -117,7 +117,7 @@ void ft_printf_struct(t_args *elem, int *k)
 	ft_putchar('\n');
 	ft_putstr("wildcard_precision:  ");
 	ft_putnbr(elem[*k].wildcard_precision);
-	ft_putchar('\n');*/
+	ft_putchar('\n');
 	ft_putstr("-->start:  ");
 	ft_putnbr(elem[*k].start);
 	//ft_putchar('\n');
