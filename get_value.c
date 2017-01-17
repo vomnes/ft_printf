@@ -63,9 +63,13 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
     {
         elem[*k].width = va_arg(*args, int);
         if (elem[*k].width < 0)
-            elem[*k].end_space = 1; 
+            elem[*k].end_space = 1;
         elem[*k].width = ((elem[*k].width < 0) ? -elem[*k].width : elem[*k].width);
     }
+    if (elem[*k].length == l && elem[*k].type == 'c')
+        elem[*k].type = 'C';
+    if (elem[*k].length == l && elem[*k].type == 's')
+        elem[*k].type = 'S';
     if (elem[*k].ok_precision == 1 && elem[*k].wildcard_precision == 1)
         elem[*k].precision = va_arg(*args, int);
 	if (elem[*k].type == 's')
