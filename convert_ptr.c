@@ -12,27 +12,95 @@
 
 #include "ft_printf.h"
 
-int ft_manage_ptr(const char *value, t_args *elem, int *k)
+static void ft_ptr_start_space(const char *value, t_args *elem, int *k)
 {
     int i;
+    int prefix_len;
 
     i = 0;
-    if (elem[*k].ok_width == 1 && elem[*k].end_space == 0 &&
-        elem[*k].pre_zero == 0)
-        if (elem[*k].width >= (int)ft_strlen(value) - 2)
-            while (i++ < elem[*k].width - (int)ft_strlen(value) - 2)
+    prefix_len = (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    value[0] == '0') ? 1 : 2;
+    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 1 && !elem[*k].end_space)
+    {
+        if (elem[*k].precision >= (int)ft_strlen(value))
+            while (i++ < elem[*k].width - elem[*k].precision - prefix_len)
                 ft_putchar(' ');
-    ft_putstr("0x");
+        else
+            while (i++ < elem[*k].width - (int)ft_strlen(value) - prefix_len)
+                ft_putchar(' ');
+    }
+    else if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 0)
+    {
+        if (elem[*k].ok_width == 1 && elem[*k].end_space == 0 &&
+            elem[*k].pre_zero == 0)
+            if (elem[*k].width >= (int)ft_strlen(value) - prefix_len)
+                while (i++ < elem[*k].width - (int)ft_strlen(value) - prefix_len)
+                    ft_putchar(' ');
+    }
+}
+
+static void ft_ptr_zeroes(const char *value, t_args *elem, int *k)
+{
+    int i;
+    int prefix_len;
+
     i = 0;
-    if (elem[*k].ok_width == 1 && elem[*k].pre_zero == 1)
-        if (elem[*k].width >= (int)ft_strlen(value) - 2)
-            while (i++ < elem[*k].width - (int)ft_strlen(value) - 2)
-                ft_putchar('0');
-    ft_putstr(value);
-    if (elem[*k].ok_width == 1 && elem[*k].end_space == 1)
-        if (elem[*k].width >= (int)ft_strlen(value) - 2)
-            while (i++ < elem[*k].width - (int)ft_strlen(value) - 2)
+    prefix_len = (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    value[0] == '0') ? 1 : 2;
+    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 1)
+        while (i++ < elem[*k].precision - (int)ft_strlen(value))
+            ft_putchar('0');
+    else if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 0)
+    {
+        if (elem[*k].pre_zero == 1)
+            if (elem[*k].width >= (int)ft_strlen(value) + prefix_len)
+                while (i++ < elem[*k].width - ((int)ft_strlen(value) +
+                prefix_len))
+                    ft_putchar('0');
+    }
+    else if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1)
+        while (i++ < elem[*k].precision - (int)ft_strlen(value))
+            ft_putchar('0');
+}
+
+static void ft_ptr_end_space(const char *value, t_args *elem, int *k)
+{
+    int i;
+    int prefix_len;
+
+    i = 0;
+    prefix_len = (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    value[0] == '0') ? 1 : 2;
+    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 1 &&
+    elem[*k].end_space)
+    {
+        if (elem[*k].precision >= (int)ft_strlen(value))
+            while (i++ < elem[*k].width - elem[*k].precision - prefix_len)
                 ft_putchar(' ');
+        else
+            while (i++ < elem[*k].width - (int)ft_strlen(value) - prefix_len)
+                ft_putchar(' ');
+    }
+    else if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 0 &&
+    elem[*k].end_space == 1)
+    {
+        if (elem[*k].width >= (int)ft_strlen(value) - prefix_len)
+            while (i++ < elem[*k].width - (int)ft_strlen(value) - prefix_len)
+                ft_putchar(' ');
+    }
+}
+
+int ft_manage_ptr(const char *value, t_args *elem, int *k)
+{
+    ft_ptr_start_space(value, elem, k);
+    ft_putstr("0x");
+    ft_ptr_zeroes(value, elem, k);
+    if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
+    value[0] == '0')
+        ;
+    else
+        ft_putstr(value);
+    ft_ptr_end_space(value, elem, k);
 	return (0);
 }
 
