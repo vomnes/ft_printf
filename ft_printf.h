@@ -109,6 +109,8 @@ int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
 int  ft_check_type(t_args *elem, int *k, va_list *args);
 
+int ft_adapt_length(t_args *elem, int *k, int *nb);
+
 void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);
 
