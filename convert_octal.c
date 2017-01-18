@@ -74,10 +74,11 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 {
 	int			len;
     int         tmp_len;
+    unsigned long long int tmp_nb;
 	char		str[100];
-	int 		zero;
 
-	zero = ((nb == 0) ? 1 : 0);
+
+    tmp_nb = nb;
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 8);
     tmp_len = len;
@@ -91,11 +92,13 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 		str[len] = (nb % 8) + '0';
 		nb /= 8;
 	}
-	if (zero == 1)
+	if (tmp_nb == 0)
 	{
 		ft_bzero(str, 100);
 		str[0] = '0';
 	}
 	ft_manage_octal(str, elem, "0", k);
-	return (tmp_len + ((elem[*k].pre_hash == 1) ? 1 : 0));
+	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1
+    && elem[*k].precision == 0 && elem[*k].pre_hash == 0 && tmp_nb == 0) ? 1 : 0)
+    + ((tmp_nb != 0 && elem[*k].pre_hash == 1) ? 1 : 0));
 }

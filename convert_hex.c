@@ -109,8 +109,10 @@ int		ft_itoa_hex(unsigned long long int nb, char A_a, int *k, t_args *elem)
 {
 	int			len;
     int         tmp_len;
+    unsigned long long int tmp_nb;
 	char		str[100];
 
+    tmp_nb = nb;
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 16);
     tmp_len = len;
@@ -128,5 +130,7 @@ int		ft_itoa_hex(unsigned long long int nb, char A_a, int *k, t_args *elem)
 		nb /= 16;
 	}
 	ft_manage_hex(str, elem, A_a == 'a' ? "0x" : "0X", k);
-	return (tmp_len + ((elem[*k].pre_hash == 1) ? 2 : 0));
+	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1
+    && elem[*k].precision == 0 && tmp_nb == 0) ? 1 : 0)
+    + ((tmp_nb != 0 && elem[*k].pre_hash == 1) ? 2 : 0));
 }

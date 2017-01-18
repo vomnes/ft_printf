@@ -123,5 +123,6 @@ int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)
 		nb /= 10;
 	}
 	ft_manage_unsigned(str, elem, k);
-	return (tmp_len);
+	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 &&
+    elem[*k].precision == 0 && nb == 0) ? 1 : 0));
 }
