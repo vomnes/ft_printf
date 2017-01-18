@@ -25,9 +25,10 @@ int ft_manage_signed(const char *value, t_args *elem, int *k)
             ft_putchar(' ');
     }
     ft_put_signed_zeroes(value, elem, k);
-    if (elem[*k].ok_precision == 1 && !(elem[*k].precision) && value[0] == '0')
+    if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && value[0] == '0')
     {
-        if (elem[*k].ok_width == 1)
+        if (elem[*k].ok_width == 1 && elem[*k].width > 0 &&
+        (elem[*k].pre_sign == 0 && elem[*k].pre_blank == 0))
             ft_putchar(' ');
         else
             ;
@@ -38,9 +39,53 @@ int ft_manage_signed(const char *value, t_args *elem, int *k)
 	return (0);
 }
 
-size_t	ft_count(long long int nb)
+static void ft_get_min(long long int nb, char const *str)
 {
-	size_t count;
+    if (nb == (-9223372036854775807 - 1))
+    {
+        ft_strclr((char*)str);
+        ft_strcpy((char*)str, "9223372036854775808");
+    }
+}
+
+int ft_less_len(long long int nb, int *k, t_args *elem)
+{
+    int less;
+
+    less = 0;
+    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && elem[*k].precision == 0 && nb == 0)
+        less--;
+    if (elem[*k].ok_precision == 1 && (elem[*k].precision == 0 || elem[*k].precision == 1)
+    && nb == 0 && (elem[*k].pre_sign || elem[*k].pre_blank))
+        less++;
+    if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
+    && elem[*k].precision == 0 && nb == 0 && (elem[*k].pre_sign ||
+    elem[*k].pre_blank))
+        less--;
+    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 0
+       && nb != 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
+       less++;
+    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && nb < 0)
+        less++;
+    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && elem[*k].precision == 1
+       && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
+       less++;
+     if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
+     && elem[*k].precision == 1
+     && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
+         less++;
+    if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
+    && elem[*k].precision == 0 && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
+        less++;
+    if (elem[*k].ok_width == 1 && elem[*k].width > 1 && elem[*k].ok_precision == 1
+    && elem[*k].precision > 1 && (nb < 0 || elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
+        less++;
+    return (less);
+}
+
+int	ft_count(long long int nb)
+{
+	int count;
 
 	count = 0;
 	if (nb == 0)
@@ -51,15 +96,6 @@ size_t	ft_count(long long int nb)
 		count++;
 	}
 	return (count);
-}
-
-static void ft_get_min(long long int nb, char const *str)
-{
-    if (nb == (-9223372036854775807 - 1))
-    {
-        ft_strclr((char*)str);
-        ft_strcpy((char*)str, "9223372036854775808");
-    }
 }
 
 static int ft_get_neg_len(long long int *nb, t_args *el, int *k)
@@ -95,6 +131,5 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
 	}
     ft_get_min(nb, str);
 	ft_manage_signed(str, elem, k);
-	return (ft_count(nb) + ((nb < 0) ? 1 : 0) +
-    ((elem[*k].pre_sign || elem[*k].pre_blank) ? 1 : 0));
+	return (ft_count(nb) + ft_less_len(nb, k, elem));
 }

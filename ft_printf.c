@@ -36,10 +36,18 @@ int ft_check_len_wp(t_args *elem, int *k, int *len)
 	get_pre = 0;
 	if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 1)
 	{
+
 		if (elem[*k].width > elem[*k].precision)
 		{
 			if (elem[*k].type == 's')
 				return (elem[*k].width);
+			else if (ft_is_signed(elem[*k].type))
+			{
+				if  (elem[*k].width > *len)
+					return (elem[*k].width);
+				else
+					return (*len);
+			}
 			else
 			{
 				if  (elem[*k].width > *len)
@@ -64,8 +72,9 @@ int ft_check_len_wp(t_args *elem, int *k, int *len)
 			{
 				get_pre = ((elem[*k].neg == -1) ? 1 : 0) +
 				(((elem[*k].neg != -1) && (elem[*k].pre_sign == 1 ||
-				elem[*k].pre_blank == 1)) ? 1 : 0);
-				if (elem[*k].width == elem[*k].precision)
+				elem[*k].pre_blank == 1)) ? (*len - 1) : 0);
+				if (elem[*k].width == elem[*k].precision &&
+					*len < elem[*k].precision)
 					return (elem[*k].width + get_pre);
 				if (*len < elem[*k].precision)
 					return (elem[*k].precision + get_pre);
