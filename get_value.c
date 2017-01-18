@@ -65,6 +65,7 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
         if (elem[*k].width < 0)
             elem[*k].end_space = 1;
         elem[*k].width = ((elem[*k].width < 0) ? -elem[*k].width : elem[*k].width);
+        elem[*k].ok_width = ((elem[*k].width == 0) ? 0 : 1);
     }
     if (elem[*k].length == l && elem[*k].type == 'c')
         elem[*k].type = 'C';
