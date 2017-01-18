@@ -75,7 +75,8 @@ static void ft_put_signed_space_bis(char const *value, int *k, t_args *elem)
         if (elem[*k].precision <= (int)ft_strlen(value))
             while (i++ < elem[*k].width - (int)ft_strlen(value) -
             ((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-            (elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0)
+            value[0] != '0' && (elem[*k].pre_blank == 1 || elem[*k].pre_sign
+            == 1)) ? 1 : 0)
                 ft_putchar(' ');
         else
             while (i++ < elem[*k].width - elem[*k].precision -
