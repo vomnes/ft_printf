@@ -16,25 +16,28 @@ int ft_manage_signed(const char *value, t_args *elem, int *k)
 {
     ft_put_signed_space(value, k, elem);
     if (elem[*k].neg == -1)
-        ft_putchar('-');
+        ft_putchar_len('-', &elem[*k].arg_len);
     else if (elem[*k].neg != -1)
     {
         if (elem[*k].pre_sign == 1)
-            ft_putchar('+');
+            ft_putchar_len('+', &elem[*k].arg_len);
         else if (elem[*k].pre_blank == 1)
-            ft_putchar(' ');
+            ft_putchar_len(' ', &elem[*k].arg_len);
     }
     ft_put_signed_zeroes(value, elem, k);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 && value[0] == '0')
     {
         if (elem[*k].ok_width == 1 && elem[*k].width > 0 &&
         (elem[*k].pre_sign == 0 && elem[*k].pre_blank == 0))
-            ft_putchar(' ');
+            ft_putchar_len(' ', &elem[*k].arg_len);
         else
             ;
     }
     else
+    {
         ft_putstr(value);
+        elem[*k].arg_len += (int)ft_strlen(value);
+    }
     ft_put_signed_end_space(value, k, elem);
 	return (0);
 }
@@ -131,5 +134,5 @@ int		ft_itoa_signed(long long int nb, int *k, t_args *elem)
 	}
     ft_get_min(nb, str);
 	ft_manage_signed(str, elem, k);
-	return (ft_count(nb) + ft_less_len(nb, k, elem));
+	return (elem[*k].arg_len);
 }
