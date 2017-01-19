@@ -30,6 +30,9 @@ int ft_manage_signed(const char *value, t_args *elem, int *k)
         if (elem[*k].ok_width == 1 && elem[*k].width > 0 &&
         (elem[*k].pre_sign == 0 && elem[*k].pre_blank == 0))
             ft_putchar_len(' ', &elem[*k].arg_len);
+        else if (elem[*k].end_space == 1 && elem[*k].ok_width == 1 && elem[*k].width > 0 &&
+        (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1) && value[0] == '0')
+            ft_putchar_len(' ', &elem[*k].arg_len);
         else
             ;
     }
