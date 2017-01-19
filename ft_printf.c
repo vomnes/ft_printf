@@ -78,7 +78,6 @@ int			ft_printf(const char *format, ...)
 		exit (-1);
 	}
     va_end(args);
-	if (nb_pct)
-		free(elem);
+	free(elem);
     return (len);
 }
