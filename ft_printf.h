@@ -68,6 +68,7 @@ int		ft_parsing_precision(const char *s, t_args *elem);
 int		ft_parsing_length(const char *s, t_args *elem);
 void	ft_parsing_type(const char *s, t_args *elem);
 int		ft_manage_parsing(const char *s, t_args *elem);
+int ft_check_errors(const char *s, int *i, int num_check);
 
 void 	ft_hex_basic_one(const char *value, t_args *elem, int *k);
 void 	ft_hex_basic_two(const char *value, t_args *elem, int *k);

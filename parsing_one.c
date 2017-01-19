@@ -12,6 +12,30 @@
 
 #include "ft_printf.h"
 
+int ft_check_errors(const char *s, int *i, int num_check)
+{
+	if (num_check == 1)
+		if (!(ft_is_flag(s[*i + 1])) && !(ft_is_type(s[*i + 1])) &&
+			!(ft_is_length(s[*i + 1])) && !(ft_isdigit(s[*i + 1])) &&
+			s[*i + 1] != '.' && s[*i + 1] != '*')
+				return (-1);
+	if (num_check == 2)
+		if (!(ft_is_type(s[*i])) && !(ft_is_length(s[*i])) &&
+			!(ft_isdigit(s[*i])) && s[*i] != '*' && s[*i] != '.')
+				return (-1);
+	if (num_check == 3)
+		if (!(ft_is_type(s[*i])) && !(ft_is_length(s[*i])) &&
+			!(ft_isdigit(s[*i])) && s[*i] != '.')
+				return (-1);
+	if (num_check == 4)
+		if (!ft_is_type(s[*i]) && !ft_is_length(s[*i]))
+			return (-1);
+	if (num_check == 5)
+		if (!ft_is_type(s[*i]))
+			return (-1);
+	return (0);
+}
+
 int		ft_parsing_start(const char *s, t_args *elem)
 {
 	int i;
@@ -23,15 +47,13 @@ int		ft_parsing_start(const char *s, t_args *elem)
 	is_arg = 0;
 	while (s[i] != '\0')
 	{
-		if (is_arg == 1 && s[i] == '%' && s[i + 1] != '%')
-			i += 2;
-		if (is_arg == 1 && s[i] == '%' && s[i + 1] == '%')
-			i++;
 		if (is_arg == 1 && ft_is_type(s[i]))
 			is_arg = 0;
-		if (s[i] == '%')
+		else if (s[i] == '%')
 		{
 			ft_init_struct(elem, &k);
+			if (ft_check_errors(s, &i, 1) == -1)
+				return (-1);
 			elem[k].start = i;
 			elem[k].ok_start = 1;
 			is_arg = 1;
@@ -76,7 +98,11 @@ int		ft_parsing_flag(const char *s, t_args *elem)
 		i = elem[k].start;
 		i++;
 		if ((ft_is_flag(s[i])))
+		{
 			ft_put_flag(s, elem, &i, &k);
+			if (ft_check_errors(s, &i, 2) == -1)
+				return (-1);
+		}
 		else
 			elem[k].new_start = elem[k].start;
 		k++;
@@ -114,7 +140,11 @@ int		ft_parsing_width(const char *s, t_args *elem)
 		if (elem[k].new_start == elem[k].start)
 			i++;
 		if (s[i] == '*' || (ft_isdigit(s[i])))
+		{
 			ft_put_width(s, elem, &i, &k);
+			if (ft_check_errors(s, &i, 3) == -1)
+				return (-1);
+		}
 		k++;
 	}
 	return (0);

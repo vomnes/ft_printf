@@ -14,11 +14,16 @@
 
 int		ft_manage_parsing(const char *s, t_args *elem)
 {
-	ft_parsing_start(s, elem);
-	ft_parsing_flag(s, elem);
-	ft_parsing_width(s, elem);
-	ft_parsing_precision(s, elem);
-	ft_parsing_length(s, elem);
+	if (ft_parsing_start(s, elem) == -1)
+			return (-1);
+	if (ft_parsing_flag(s, elem) == -1)
+			return (-1);
+	if (ft_parsing_width(s, elem) == -1)
+			return (-1);
+	if (ft_parsing_precision(s, elem) == -1)
+			return (-1);
+	if (ft_parsing_length(s, elem) == -1)
+			return (-1);
 	ft_parsing_type(s, elem);
 	return (0);
 }
@@ -32,7 +37,6 @@ int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
     i = 0;
 	k = 0;
 	ret = 0;
-	ft_manage_parsing(format, elem);
     while (format[i] != '\0')
     {
         if (i == elem[k].start && elem[k].ok_start == 1)
@@ -71,7 +75,13 @@ int			ft_printf(const char *format, ...)
 	   return (-1);
 	len = 0;
     va_start(args, format);
-    if (ft_printf_run(format, elem, &args, &len) == -1)
+	if (ft_manage_parsing(format, elem) == -1)
+	{
+		free(elem);
+		return (0);
+		exit (-1);
+	}
+	if (ft_printf_run(format, elem, &args, &len) == -1)
 	{
 		free(elem);
 		return (-1);

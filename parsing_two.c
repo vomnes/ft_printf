@@ -53,6 +53,8 @@ int		ft_parsing_precision(const char *s, t_args *elem)
 		{
 			i++;
 			ft_put_precision(s, elem, &i, &k);
+			if (ft_check_errors(s, &i, 4) == -1)
+				return (-1);
 		}
 		k++;
 	}
@@ -101,6 +103,8 @@ int		ft_parsing_length(const char *s, t_args *elem)
 		if (elem[k].new_start == elem[k].start)
 			i++;
 		ft_put_length(s, elem, &i, &k);
+		if (ft_check_errors(s, &i, 5) == -1)
+			return (-1);
 		k++;
 	}
 	return (0);
