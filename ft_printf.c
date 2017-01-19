@@ -23,12 +23,6 @@ int		ft_manage_parsing(const char *s, t_args *elem)
 	return (0);
 }
 
-void ft_printf_area(char const *format, int *i, int *y)
-{
-	while (*i < *y && format[*i] != '\0')
-		ft_putchar(format[(*i)++]);
-}
-
 int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
 {
     int i;
@@ -38,12 +32,9 @@ int ft_printf_run(char const *format, t_args *elem, va_list *args, int *len)
     i = 0;
 	k = 0;
 	ret = 0;
-
 	ft_manage_parsing(format, elem);
     while (format[i] != '\0')
     {
-		if (format[i] == '%' && format[i + 1] == '%')
-			i++;
         if (i == elem[k].start && elem[k].ok_start == 1)
         {
 			ret = ft_check_type(elem, &k, args);
@@ -68,13 +59,15 @@ int			ft_printf(const char *format, ...)
 {
     va_list args;
     t_args *elem;
+	int nb_pct;
     int len;
 
 	if (format == NULL)
 		return (0);
 	if (*format == '\0')
 		return (0);
-    if (!(elem = ft_memalloc(sizeof(t_args) * ft_nb_pct(format))))
+	nb_pct = ft_nb_pct(format);
+    if (!(elem = ft_memalloc(sizeof(t_args) * nb_pct)))
 	   return (-1);
 	len = 0;
     va_start(args, format);
@@ -85,6 +78,7 @@ int			ft_printf(const char *format, ...)
 		exit (-1);
 	}
     va_end(args);
-	free(elem);
+	if (nb_pct)
+		free(elem);
     return (len);
 }
