@@ -34,23 +34,29 @@ int ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k)
     ft_octal_basic_two(value, elem, k);
     ft_octal_hash(value, elem, k);
 	if (elem[*k].pre_hash == 1 && elem[*k].u_nb != 0)
-		ft_putstr(prefix);
+    {
+        ft_putstr(prefix);
+        elem[*k].arg_len += (int)ft_strlen(prefix);
+    }
     ft_octal_zero_one(value, elem, k);
     ft_octal_zero_two(value, elem, k);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0
     && value[0] == '0')
     {
         if (elem[*k].pre_hash == 1 && elem[*k].ok_width == 0)
-            ft_putchar('0');
+            ft_putchar_len('0', &elem[*k].arg_len);
         else if (elem[*k].ok_width == 0)
             ;
         else if (elem[*k].ok_width == 1 && elem[*k].pre_hash == 1)
-            ft_putchar('0');
+            ft_putchar_len('0', &elem[*k].arg_len);
         else if (elem[*k].ok_width == 1)
-            ft_putchar(' ');
+            ft_putchar_len(' ', &elem[*k].arg_len);
     }
     else
+    {
         ft_putstr(value);
+        elem[*k].arg_len += (int)ft_strlen(value);
+    }
     ft_octal_end_space(value, elem, k);
 	return (0);
 }
@@ -73,7 +79,6 @@ size_t	ft_count_ho(unsigned long long int nb, int base)
 int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 {
 	int			len;
-    int         tmp_len;
     unsigned long long int tmp_nb;
 	char		str[100];
 
@@ -81,7 +86,6 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
     tmp_nb = nb;
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 8);
-    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	str[len + 1] = '\0';
@@ -98,7 +102,5 @@ int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 		str[0] = '0';
 	}
 	ft_manage_octal(str, elem, "0", k);
-	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1
-    && elem[*k].precision == 0 && elem[*k].pre_hash == 0 && tmp_nb == 0) ? 1 : 0)
-    + ((tmp_nb != 0 && elem[*k].pre_hash == 1) ? 1 : 0));
+	return (elem[*k].arg_len);
 }
