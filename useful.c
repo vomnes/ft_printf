@@ -35,29 +35,36 @@ void ft_init_struct(t_args *elem, int *k)
 	elem[*k].i_nb = 0;
 	elem[*k].u_nb = 1;
     elem[*k].neg = 0;
+	elem[*k].arg_len = 0;
 }
 
-size_t	ft_nb_pct(const char *s)
+void ft_putchar_len(char c, int *up)
+{
+	write(1, &c, 1);
+	(*up)++;
+}
+
+int	ft_nb_pct(const char *s)
 {
 	int i;
 	int count;
 	int is_arg;
 
 	i = 0;
-	is_arg = 0;
 	count = 0;
+	is_arg = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == '%' && s[i + 1] == '%')
+		if (is_arg == 1 && s[i] == '%' && s[i + 1] != '%')
+			i += 2;
+		if (is_arg == 1 && s[i] == '%' && s[i + 1] == '%')
 			i++;
-        if (is_arg == 1 && s[i] == '%')
-            i += 2;
-		if (is_arg == 1 && ft_is_type(s[i]) == 1)
+		if (is_arg == 1 && ft_is_type(s[i]))
             is_arg = 0;
-		if (s[i - 1] != '%' && s[i] == '%' && s[i + 1] != '%' && is_arg == 0)
-        {
+		if (s[i] == '%')
+		{
+			is_arg = 1;
             count++;
-            is_arg = 1;
         }
 		i++;
 	}
