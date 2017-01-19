@@ -109,6 +109,9 @@ void	ft_putnwstr(const wchar_t *wc, size_t n);
 int		ft_print_wchar(wchar_t value, int *k, t_args *elem);
 int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
+int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
+int		ft_itoa_b(unsigned long long int nb, int *k, t_args *elem);
+
 int  ft_check_type(t_args *elem, int *k, va_list *args);
 
 int ft_adapt_length(t_args *elem, int *k, int *nb);

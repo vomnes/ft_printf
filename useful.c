@@ -55,13 +55,9 @@ int	ft_nb_pct(const char *s)
 	is_arg = 0;
 	while (s[i] != '\0')
 	{
-		if (is_arg == 1 && s[i] == '%' && s[i + 1] != '%')
-			i += 2;
-		if (is_arg == 1 && s[i] == '%' && s[i + 1] == '%')
-			i++;
 		if (is_arg == 1 && ft_is_type(s[i]))
             is_arg = 0;
-		if (s[i] == '%')
+		else if (s[i] == '%')
 		{
 			is_arg = 1;
             count++;
@@ -75,7 +71,8 @@ int		ft_is_type(int c)
 {
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' ||
 			c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U' ||
-			c == 'x' || c == 'X' || c == 'c' || c == 'C' || c == '%');
+			c == 'x' || c == 'X' || c == 'c' || c == 'C' || c == '%' ||
+			c == 'b');
 }
 
 int		ft_is_type_less_pct(int c)
