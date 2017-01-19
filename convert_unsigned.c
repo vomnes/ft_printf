@@ -36,18 +36,18 @@ void ft_u_width_precision(char const *value, int *k, t_args *elem)
     {
         if (elem[*k].width <= elem[*k].precision)
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
-                ft_putchar('0');
+                ft_putchar_len('0', &elem[*k].arg_len);
         else
         {
             if ((elem[*k].precision <= (int)ft_strlen(value)) && elem[*k].end_space == 0)
                 while (i++ < elem[*k].width - (int)ft_strlen(value))
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
             else if ((elem[*k].precision > (int)ft_strlen(value)) && elem[*k].end_space == 0)
                 while (i++ < elem[*k].width - elem[*k].precision)
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
             i = 0;
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
-                ft_putchar('0');
+                ft_putchar_len('0', &elem[*k].arg_len);
         }
     }
 }
@@ -63,14 +63,14 @@ void ft_u_end_space(char const *value, int *k, t_args *elem)
         {
             if (elem[*k].precision <= (int)ft_strlen(value))
                 while (i++ < elem[*k].width - (int)ft_strlen(value))
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
             else if (elem[*k].width > elem[*k].precision)
                 while (i++ < elem[*k].width - elem[*k].precision)
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
         }
         else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
             while (i++ < elem[*k].width - (int)ft_strlen(value))
-                ft_putchar(' ');
+                ft_putchar_len(' ', &elem[*k].arg_len);
     }
 }
 
@@ -88,17 +88,20 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
     if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 0)
         if (elem[*k].precision > (int)ft_strlen(value))
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
-                ft_putchar('0');
+                ft_putchar_len('0', &elem[*k].arg_len);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
     value[0] == '0')
     {
         if (elem[*k].ok_width == 1)
-            ft_putchar(' ');
+            ft_putchar_len(' ', &elem[*k].arg_len);
         else
             ;
     }
     else
+    {
         ft_putstr(value);
+        elem[*k].arg_len += (int)ft_strlen(value);
+    }
     ft_u_end_space(value, k, elem);
 	return (0);
 }
@@ -106,12 +109,10 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
 int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)
 {
 	int			len;
-    int         tmp_len;
 	char		str[100];
 
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 10);
-    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	len--;
@@ -123,6 +124,5 @@ int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)
 		nb /= 10;
 	}
 	ft_manage_unsigned(str, elem, k);
-	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 &&
-    elem[*k].precision == 0 && nb == 0) ? 1 : 0));
+	return (elem[*k].arg_len);
 }
