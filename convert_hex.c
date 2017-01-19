@@ -35,22 +35,22 @@ void ft_hex_zero_two(const char *value, t_args *elem, int *k)
     if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 1 &&
         elem[*k].ok_width == 0)
         while (i++ < elem[*k].precision - (int)ft_strlen(value))
-            ft_putchar('0');
+            ft_putchar_len('0', &elem[*k].arg_len);
     if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 1 &&
         elem[*k].ok_width == 1)
     {
         if (elem[*k].width <= elem[*k].precision )
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
-                ft_putchar('0');
+                ft_putchar_len('0', &elem[*k].arg_len);
         else
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
-                ft_putchar('0');
+                ft_putchar_len('0', &elem[*k].arg_len);
     }
     if (elem[*k].pre_zero == 1 && elem[*k].ok_precision == 0 &&
         elem[*k].ok_width == 1)
         while (i++ < elem[*k].width - (int)ft_strlen(value) -
         ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
-            ft_putchar('0');
+            ft_putchar_len('0', &elem[*k].arg_len);
 }
 
 void ft_hex_end_space(const char *value, t_args *elem, int *k)
@@ -62,7 +62,7 @@ void ft_hex_end_space(const char *value, t_args *elem, int *k)
         elem[*k].ok_precision == 0 && elem[*k].pre_zero == 0)
         while (i++ < elem[*k].width - (int)ft_strlen(value) -
         ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
-            ft_putchar(' ');
+            ft_putchar_len(' ', &elem[*k].arg_len);
     if ((elem[*k].end_space) && (elem[*k].ok_width) && (elem[*k].ok_precision))
     {
         if (elem[*k].width > elem[*k].precision)
@@ -71,11 +71,11 @@ void ft_hex_end_space(const char *value, t_args *elem, int *k)
                 while (i++ < elem[*k].width - elem[*k].precision -
                 ((int)ft_strlen(value) - elem[*k].precision) -
                 ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
             else
                 while (i++ < elem[*k].width - elem[*k].precision -
                 ((elem[*k].pre_hash == 1 && value[0] != '0') ? 2 : 0))
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
         }
     }
 }
@@ -87,7 +87,10 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
     ft_hex_basic_two(value, elem, k);
     ft_hex_hash(value, elem, k);
 	if (elem[*k].pre_hash == 1 && elem[*k].u_nb != 0)
-		ft_putstr(prefix);
+    {
+        ft_putstr(prefix);
+        elem[*k].arg_len += (int)ft_strlen(prefix);
+    }
     ft_hex_zero_one(value, elem, k);
     ft_hex_zero_two(value, elem, k);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
@@ -95,12 +98,15 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
         ;
     else if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
     elem[*k].ok_width == 1 && value[0] == '0')
-        ft_putchar(' ');
+        ft_putchar_len(' ', &elem[*k].arg_len);
     else if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1 &&
     value[0] == '0')
-        ft_putchar('0');
+        ft_putchar_len('0', &elem[*k].arg_len);
     else
+    {
         ft_putstr(value);
+        elem[*k].arg_len += (int)ft_strlen(value);
+    }
     ft_hex_end_space(value, elem, k);
 	return (0);
 }
@@ -108,14 +114,12 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
 int		ft_itoa_hex(unsigned long long int nb, char A_a, int *k, t_args *elem)
 {
 	int			len;
-    int         tmp_len;
     unsigned long long int tmp_nb;
 	char		str[100];
 
     tmp_nb = nb;
 	ft_bzero(str, 100);
 	len = ft_count_ho(nb, 16);
-    tmp_len = len;
 	if (len > 100)
 		return (-1);
 	len--;
@@ -130,7 +134,5 @@ int		ft_itoa_hex(unsigned long long int nb, char A_a, int *k, t_args *elem)
 		nb /= 16;
 	}
 	ft_manage_hex(str, elem, A_a == 'a' ? "0x" : "0X", k);
-	return (tmp_len - ((elem[*k].ok_width == 0 && elem[*k].ok_precision == 1
-    && elem[*k].precision == 0 && tmp_nb == 0) ? 1 : 0)
-    + ((tmp_nb != 0 && elem[*k].pre_hash == 1) ? 2 : 0));
+	return (elem[*k].arg_len);
 }
