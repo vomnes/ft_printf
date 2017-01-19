@@ -51,41 +51,6 @@ static void ft_get_min(long long int nb, char const *str)
     }
 }
 
-int ft_less_len(long long int nb, int *k, t_args *elem)
-{
-    int less;
-
-    less = 0;
-    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && elem[*k].precision == 0 && nb == 0)
-        less--;
-    if (elem[*k].ok_precision == 1 && (elem[*k].precision == 0 || elem[*k].precision == 1)
-    && nb == 0 && (elem[*k].pre_sign || elem[*k].pre_blank))
-        less++;
-    if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
-    && elem[*k].precision == 0 && nb == 0 && (elem[*k].pre_sign ||
-    elem[*k].pre_blank))
-        less--;
-    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 0
-       && nb != 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
-       less++;
-    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && nb < 0)
-        less++;
-    if (elem[*k].ok_width == 0 && elem[*k].ok_precision == 1 && elem[*k].precision == 1
-       && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
-       less++;
-     if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
-     && elem[*k].precision == 1
-     && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
-         less++;
-    if (elem[*k].ok_width == 1 && elem[*k].width == 1 && elem[*k].ok_precision == 1
-    && elem[*k].precision == 0 && nb > 0 && (elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
-        less++;
-    if (elem[*k].ok_width == 1 && elem[*k].width > 1 && elem[*k].ok_precision == 1
-    && elem[*k].precision > 1 && (nb < 0 || elem[*k].pre_sign == 1 || elem[*k].pre_blank == 1))
-        less++;
-    return (less);
-}
-
 int	ft_count(long long int nb)
 {
 	int count;
