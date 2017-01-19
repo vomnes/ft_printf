@@ -56,6 +56,7 @@ typedef	struct		s_args
 	uintmax_t		u_nb;
 	int64_t			i_nb;
 	int 			neg;
+	int 			arg_len;
 }					t_args;
 
 int			ft_printf(const char *format, ...);
@@ -111,6 +112,8 @@ int  ft_check_type(t_args *elem, int *k, va_list *args);
 
 int ft_adapt_length(t_args *elem, int *k, int *nb);
 
+void ft_putchar_len(char c, int *up);
+
 void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);
 
@@ -119,6 +122,6 @@ int		ft_is_type_less_pct(int c);
 int		ft_is_flag(int c);
 int		ft_is_signed(int c);
 int		ft_is_length(int c);
-size_t	ft_nb_pct(const char *s);
+int		ft_nb_pct(const char *s);
 
 #endif
