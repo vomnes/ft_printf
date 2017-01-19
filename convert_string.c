@@ -25,14 +25,14 @@ void ft_string_pre(int *len, int *k, t_args *elem)
         {
             if (elem[*k].precision < *len)
                 while (i++ < elem[*k].width - elem[*k].precision)
-                    ft_putchar(space);
+                    ft_putchar_len(space, &elem[*k].arg_len);
             else
                 while (i++ < elem[*k].width - *len)
-                    ft_putchar(space);
+                    ft_putchar_len(space, &elem[*k].arg_len);
         }
         else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
             while (i++ < elem[*k].width - *len)
-                ft_putchar(space);
+                ft_putchar_len(space, &elem[*k].arg_len);
     }
 }
 
@@ -47,16 +47,31 @@ void ft_string_end_space(int *len, int *k, t_args *elem)
         {
             if (elem[*k].precision < *len)
                 while (i++ < elem[*k].width - elem[*k].precision)
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
             else
                 while (i++ < elem[*k].width - *len)
-                    ft_putchar(' ');
+                    ft_putchar_len(' ', &elem[*k].arg_len);
         }
         else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
             while (i++ < elem[*k].width - *len)
-                ft_putchar(' ');
+                ft_putchar_len(' ', &elem[*k].arg_len);
     }
 }
+
+static int ft_write_len(char *value, int *k, t_args *elem, int len)
+{
+    if (elem[*k].ok_precision == 1 && elem[*k].precision < len)
+    {
+        write(1, value, elem[*k].precision);
+        return (elem[*k].precision);
+    }
+    else
+    {
+        ft_putstr(value);
+        return (len);
+    }
+}
+
 
 int		ft_print_string(char *value, int *k, t_args *elem)
 {
@@ -71,19 +86,9 @@ int		ft_print_string(char *value, int *k, t_args *elem)
         len = (int)ft_strlen(value);
     ft_string_pre(&len, k, elem);
     if (value != NULL)
-    {
-        if (elem[*k].ok_precision == 1 && elem[*k].precision < (int)ft_strlen(value))
-           write(1, value, elem[*k].precision);
-        else
-            ft_putstr(value);
-    }
+        elem[*k].arg_len += ft_write_len(value, k, elem, (int)ft_strlen(value));
     else
-    {
-        if (elem[*k].ok_precision == 1 && elem[*k].precision < 6)
-           write(1, "(null)", elem[*k].precision);
-        else
-            ft_putstr("(null)");
-    }
+        elem[*k].arg_len += ft_write_len("(null)", k, elem, 6);
     ft_string_end_space(&len, k, elem);
-	return (len);
+	return (elem[*k].arg_len);
 }
