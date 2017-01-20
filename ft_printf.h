@@ -111,6 +111,9 @@ int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
 int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
 int		ft_itoa_b(unsigned long long int nb, int *k, t_args *elem);
+void ft_put_h(int *date, char x, t_args *elem, int *v);
+void ft_put_d(int *date, char x, t_args *elem, int *v);
+int ft_put_date(const char *format, int *v, t_args *elem);
 
 int  ft_check_type(t_args *elem, int *k, va_list *args);
 

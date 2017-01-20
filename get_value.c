@@ -101,5 +101,7 @@ int ft_check_type(t_args *elem, int *k, va_list *args)
 		ret = ft_itoa_octal(ft_get_unsigned(elem, k, args), elem, k);
     if (elem[*k].type == 'b')
 		ret = ft_itoa_b(va_arg(*args, unsigned long long int), k, elem);
+    if (elem[*k].type == 'k')
+    	ret = ft_put_date(va_arg(*args, char *), k, elem);
     return (ret);
 }
