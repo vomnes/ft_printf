@@ -1,38 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   convert_date.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/01/20 11:14:57 by vomnes            #+#    #+#             */
+/*   Updated: 2017/01/20 11:14:58 by vomnes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "ft_printf.h"
 
-void ft_month(const char *value, int month, int checker)
+void ft_date_one(int *date, int *v, t_args *elem)
 {
-    if (month == checker)
-        ft_putstr(value);
-}
-void ft_put_month(int month)
-{
-    ft_month("Jan", month, 1);
-    ft_month("Feb", month, 2);
-    ft_month("Mar", month, 3);
-    ft_month("Apr", month, 4);
-    ft_month("May", month, 5);
-    ft_month("Jun", month, 6);
-    ft_month("Jul", month, 7);
-    ft_month("Aug", month, 8);
-    ft_month("Sep", month, 9);
-    ft_month("Oct", month, 10);
-    ft_month("Nov", month, 11);
-    ft_month("Dec", month, 12);
-}
-
-void ft_put_day(int day, char space)
-{
-    if (day < 10)
+    if (elem[*v].pre_hash && !elem[*v].pre_sign && !elem[*v].pre_blank &&
+    !elem[*v].end_space)
+        ft_put_h(date, '#', elem, v);
+    else if (elem[*v].pre_hash && elem[*v].pre_sign && !elem[*v].pre_blank &&
+    !elem[*v].end_space)
     {
-        ft_putchar(space);
-        ft_putnbr(day);
+        ft_put_h(date, '#', elem, v);
+        ft_put_h(date, '+', elem, v);
     }
-    else
-        ft_putnbr(day);
+    else if (!elem[*v].pre_hash && !elem[*v].pre_sign && !elem[*v].pre_blank &&
+    elem[*v].end_space)
+        ft_put_d(date, '-', elem, v);
 }
 
-int ft_put_date(const char *format)//, int *k, t_args *elem)
+void ft_date_two(int *date, int *v, t_args *elem)
+{
+    if (!elem[*v].pre_hash && !elem[*v].pre_sign && elem[*v].pre_blank &&
+    elem[*v].end_space)
+    {
+        ft_put_d(date, '-', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_d(date, ' ', elem, v);
+    }
+    else if (!elem[*v].pre_hash && !elem[*v].pre_sign && elem[*v].pre_blank &&
+    !elem[*v].end_space)
+    {
+        ft_put_d(date, ' ', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_d(date, '-', elem, v);
+    }
+    else if (elem[*v].pre_hash && !elem[*v].pre_sign && elem[*v].pre_blank &&
+    elem[*v].end_space)
+    {
+        ft_put_d(date, ' ', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_d(date, '-', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_h(date, '#', elem, v);
+    }
+}
+
+void ft_print_date(int *date, int *v, t_args *elem)
+{
+    ft_date_one(date, v, elem);
+    ft_date_two(date, v, elem);
+    if (!elem[*v].pre_hash && !elem[*v].pre_sign && !elem[*v].pre_blank &&
+    !elem[*v].end_space)
+    {
+        ft_put_d(date, ' ', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_d(date, '-', elem, v);
+        ft_putchar_len(' ', &elem[*v].arg_len);
+        ft_put_h(date, '#', elem, v);
+        ft_put_h(date, '+', elem, v);
+    }
+}
+
+int ft_put_date(const char *format, int *v, t_args *elem)
 {
     int date[6];
     int i;
@@ -41,10 +80,9 @@ int ft_put_date(const char *format)//, int *k, t_args *elem)
     i = 0;
     while (i < 6)
         date[i++] = 0;
-    i = 0;
+    i = -1;
     k = 0;
-
-    while (format[i] != '\0')
+    while (format[++i] != '\0')
     {
         if (!ft_isdigit(format[i]) && format[i] != 'T' && format[i] != ':'
             && format[i] != '-')
@@ -57,51 +95,7 @@ int ft_put_date(const char *format)//, int *k, t_args *elem)
             k++;
         else if (format[i] == ':')
             k++;
-        i++;
     }
-    i = 0;
-    while (i < 6)
-    {
-        ft_putnbr(date[i++]);
-        ft_putchar('\n');
-    }
-    if (date[0] > 0 && (date[0] < 1000 || date[0] > 9999))
-        return (-1);
-    else
-        ft_putnbr(date[0]);
-    ft_putchar(' ');
-    if (date[1] > 0)
-        ft_put_month(date[1]);
-    ft_putchar(' ');
-    if (date[2] > 31)
-        return (-1);
-    if (date[2] > 0)
-        ft_put_day(date[2], '0');
-    ft_putchar('\n');
-    return (0);
+    ft_print_date(date, v, elem);
+    return (elem[*v].arg_len);
 }
-
-/*Year:
-   YYYY (eg 1997)
-Year and month:
-   YYYY-MM (eg 1997-07)
-Complete date:
-   YYYY-MM-DD (eg 1997-07-16)
-Complete date plus hours and minutes:
-   YYYY-MM-DDThh:mmTZD (eg 1997-07-16T19:20+01:00)
-Complete date plus hours, minutes and seconds:
-   YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)
-Complete date plus hours, minutes, seconds and a decimal fraction of a
-second
-   YYYY-MM-DDThh:mm:ss.sTZD (eg 1997-07-16T19:20:30.45+01:00)
-where:
-
-  YYYY = four-digit year
-  MM   = two-digit month (01=January, etc.)
-  DD   = two-digit day of month (01 through 31)
-  hh   = two digits of hour (00 through 23) (am/pm NOT allowed)
-  mm   = two digits of minute (00 through 59)
-  ss   = two digits of second (00 through 59)
-  s    = one or more digits representing a decimal fraction of a second
-  TZD  = time zone designator (Z or +hh:mm or -hh:mm)
-*/
