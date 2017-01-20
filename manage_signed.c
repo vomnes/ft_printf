@@ -15,20 +15,21 @@
 void		ft_signed_end_space(char const *value, t_args *elem, int *k)
 {
 	int i;
+	int less;
 
 	i = 0;
+	less = (elem[*k].neg != -1 && (elem[*k].pre_blank == 1 ||
+	elem[*k].pre_sign == 1)) ? 1 : 0;
 	if (elem[*k].precision <= (int)ft_strlen(value))
 	{
 		while (i++ < elem[*k].width - (int)ft_strlen(value) -
-		((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-		(elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0)
+		((elem[*k].neg == -1) ? 1 : 0) - less)
 			ft_putchar_len(' ', &elem[*k].arg_len);
 	}
 	else
 	{
 		while (i++ < elem[*k].width - elem[*k].precision -
-		((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-		(elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0)
+		((elem[*k].neg == -1) ? 1 : 0) - less)
 			ft_putchar_len(' ', &elem[*k].arg_len);
 	}
 }
@@ -65,8 +66,14 @@ void		ft_put_signed_zeroes(char const *value, t_args *elem, int *k)
 static void	ft_put_signed_space_bis(char const *value, int *k, t_args *elem)
 {
 	int i;
+	int less_one;
+	int less_two;
 
 	i = 0;
+	less_one = (elem[*k].neg != -1 && value[0] != '0' &&
+	(elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0;
+	less_two = (elem[*k].neg != -1 && (elem[*k].pre_blank == 1 ||
+	elem[*k].pre_sign == 1)) ? 1 : 0;
 	if (elem[*k].width <= elem[*k].precision)
 		while (i++ < elem[*k].width - elem[*k].precision)
 			ft_putchar_len(' ', &elem[*k].arg_len);
@@ -74,14 +81,11 @@ static void	ft_put_signed_space_bis(char const *value, int *k, t_args *elem)
 	{
 		if (elem[*k].precision <= (int)ft_strlen(value))
 			while (i++ < elem[*k].width - (int)ft_strlen(value) -
-			((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-			value[0] != '0' && (elem[*k].pre_blank == 1 || elem[*k].pre_sign
-			== 1)) ? 1 : 0)
+			((elem[*k].neg == -1) ? 1 : 0) - less_one)
 				ft_putchar_len(' ', &elem[*k].arg_len);
 		else
 			while (i++ < elem[*k].width - elem[*k].precision -
-			((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-			(elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0)
+			((elem[*k].neg == -1) ? 1 : 0) - less_two)
 				ft_putchar_len(' ', &elem[*k].arg_len);
 	}
 }
@@ -116,8 +120,11 @@ void		ft_put_signed_space(char const *value, int *k, t_args *elem)
 void		ft_put_signed_end_space(char const *value, int *k, t_args *elem)
 {
 	int i;
+	int less;
 
 	i = 0;
+	less = (elem[*k].neg != -1 && (elem[*k].pre_blank == 1 ||
+	elem[*k].pre_sign == 1)) ? 1 : 0;
 	if (elem[*k].end_space == 1)
 	{
 		if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 1)
@@ -125,8 +132,7 @@ void		ft_put_signed_end_space(char const *value, int *k, t_args *elem)
 		else if (elem[*k].ok_precision == 0 && elem[*k].ok_width == 1)
 		{
 			while (i++ < elem[*k].width - (int)ft_strlen(value) -
-			((elem[*k].neg == -1) ? 1 : 0) - (elem[*k].neg != -1 &&
-			(elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) ? 1 : 0)
+			((elem[*k].neg == -1) ? 1 : 0) - less)
 				ft_putchar_len(' ', &elem[*k].arg_len);
 		}
 	}
