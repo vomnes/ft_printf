@@ -33,7 +33,7 @@ int ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k)
     ft_octal_basic_one(value, elem, k);
     ft_octal_basic_two(value, elem, k);
     ft_octal_hash(value, elem, k);
-	if (elem[*k].pre_hash == 1 && elem[*k].u_nb != 0)
+	if (elem[*k].pre_hash == 1 && value[0] != '0')
     {
         ft_putstr(prefix);
         elem[*k].arg_len += (int)ft_strlen(prefix);

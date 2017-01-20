@@ -14,7 +14,7 @@
 
 int     ft_adapt_x(const char *value, t_args *elem, int *k)
 {
-    if (elem[*k].type == 'x' || elem[*k].type == 'X')
+    if (elem[*k].type == 'x' || elem[*k].type == 'X' || elem[*k].type == 'b')
     {
         elem[*k].size = ft_strlen(value);
         if (elem[*k].pre_sign == 1)
@@ -86,11 +86,8 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
     ft_hex_basic_one(value, elem, k);
     ft_hex_basic_two(value, elem, k);
     ft_hex_hash(value, elem, k);
-	if (elem[*k].pre_hash == 1 && elem[*k].u_nb != 0)
-    {
-        ft_putstr(prefix);
-        elem[*k].arg_len += (int)ft_strlen(prefix);
-    }
+	if (elem[*k].pre_hash == 1 && value[0] != '0')
+        ft_putstr_len(prefix, &elem[*k].arg_len);
     ft_hex_zero_one(value, elem, k);
     ft_hex_zero_two(value, elem, k);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
@@ -103,10 +100,7 @@ int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k)
     value[0] == '0')
         ft_putchar_len('0', &elem[*k].arg_len);
     else
-    {
-        ft_putstr(value);
-        elem[*k].arg_len += (int)ft_strlen(value);
-    }
+        ft_putstr_len(value, &elem[*k].arg_len);
     ft_hex_end_space(value, elem, k);
 	return (0);
 }

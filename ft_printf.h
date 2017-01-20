@@ -53,7 +53,6 @@ typedef	struct		s_args
 	t_length		length;
 	char			type;
 	int				size;
-	uintmax_t		u_nb;
 	int64_t			i_nb;
 	int 			neg;
 	int 			arg_len;
@@ -120,6 +119,7 @@ int  ft_check_type(t_args *elem, int *k, va_list *args);
 int ft_adapt_length(t_args *elem, int *k, int *nb);
 
 void ft_putchar_len(char c, int *up);
+void ft_putstr_len(const char *value, int *up);
 
 void ft_init_struct(t_args *elem, int *k);
 void ft_printf_struct(t_args *elem, int *k);

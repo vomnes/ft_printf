@@ -71,6 +71,11 @@ int			ft_printf(const char *format, ...)
 	if (*format == '\0')
 		return (0);
 	nb_pct = ft_nb_pct(format);
+	if (nb_pct == 0)
+	{
+		ft_putstr(format);
+		return ((int)ft_strlen(format));
+	}
     if (!(elem = ft_memalloc(sizeof(t_args) * nb_pct)))
 	   return (-1);
 	len = 0;

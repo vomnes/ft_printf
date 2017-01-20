@@ -38,7 +38,6 @@ static uintmax_t ft_get_unsigned(t_args *elem, int *k, va_list *args)
     uintmax_t nbr;
 
     nbr = va_arg(*args, uintmax_t);
-    elem[*k].u_nb = nbr;
     if (elem[*k].length == hh)
         return ((unsigned char)nbr);
     else if (elem[*k].length == h)
@@ -74,6 +73,11 @@ static void ft_update_type(t_args *elem, int *k, va_list *args)
         elem[*k].precision = va_arg(*args, int);
         if (elem[*k].type == 's' || elem[*k].type == 'S')
             elem[*k].ok_precision = ((elem[*k].precision < 0) ? 0 : 1);
+        else
+        {
+            elem[*k].precision = (elem[*k].precision < 0) ? elem[*k].width
+            : elem[*k].precision;
+        }
     }
 }
 

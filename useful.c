@@ -33,7 +33,6 @@ void ft_init_struct(t_args *elem, int *k)
 	elem[*k].type = 0;
     elem[*k].size = 0;
 	elem[*k].i_nb = 0;
-	elem[*k].u_nb = 1;
     elem[*k].neg = 0;
 	elem[*k].arg_len = 0;
 }
@@ -42,6 +41,12 @@ void ft_putchar_len(char c, int *up)
 {
 	write(1, &c, 1);
 	(*up)++;
+}
+
+void ft_putstr_len(const char *value, int *up)
+{
+	ft_putstr(value);
+	*up += (int)ft_strlen(value);
 }
 
 int	ft_nb_pct(const char *s)
@@ -72,7 +77,7 @@ int		ft_is_type(int c)
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' ||
 			c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U' ||
 			c == 'x' || c == 'X' || c == 'c' || c == 'C' || c == '%' ||
-			c == 'b');
+			c == 'b' || c == 'k');
 }
 
 int		ft_is_type_less_pct(int c)
