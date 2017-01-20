@@ -34,10 +34,7 @@ int ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k)
     ft_octal_basic_two(value, elem, k);
     ft_octal_hash(value, elem, k);
 	if (elem[*k].pre_hash == 1 && value[0] != '0')
-    {
-        ft_putstr(prefix);
-        elem[*k].arg_len += (int)ft_strlen(prefix);
-    }
+        ft_putstr_len(prefix, &elem[*k].arg_len);
     ft_octal_zero_one(value, elem, k);
     ft_octal_zero_two(value, elem, k);
     if (elem[*k].ok_precision == 1 && elem[*k].precision == 0
@@ -53,10 +50,7 @@ int ft_manage_octal(const char *value, t_args *elem, const char *prefix, int *k)
             ft_putchar_len(' ', &elem[*k].arg_len);
     }
     else
-    {
-        ft_putstr(value);
-        elem[*k].arg_len += (int)ft_strlen(value);
-    }
+        ft_putstr_len(value, &elem[*k].arg_len);
     ft_octal_end_space(value, elem, k);
 	return (0);
 }
