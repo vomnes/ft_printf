@@ -1,25 +1,51 @@
 NAME = libftprintf.a
-SRC = convert_unsigned.c manage_octal.c convert_wstr.c manage_octal_2.c \
-ft_printf.c manage_signed.c convert_char.c parsing_one.c convert_hex.c \
-get_value.c parsing_two.c convert_octal.c useful.c convert_ptr.c wchar.c \
-convert_signed.c convert_string.c manage_hex.c convert_binary.c \
-convert_date.c manage_date.c manage_wstr.c check_errors.c
-OBJET = $(SRC:.c=.o)
-FLAGS =
+SRC_PF =   check_errors.c convert_binary.c convert_char.c convert_date.c \
+convert_hex.c convert_octal.c convert_ptr.c convert_signed.c convert_string.c \
+convert_unsigned.c convert_wstr.c ft_is.c ft_printf.c get_value.c \
+manage_date.c manage_hex.c manage_octal.c manage_octal_2.c manage_signed.c \
+manage_wstr.c parsing_one.c parsing_two.c useful.c wchar.c
 
-.PHONY: clean fclean all
+SRC_LFT = ft_memset.c ft_bzero.c ft_isdigit.c ft_memalloc.c ft_putchar.c \
+ft_putendl.c ft_putnbr.c ft_putstr.c ft_putwstr.c ft_strclr.c ft_strcpy.c \
+ft_strlen.c ft_putwchar.c
 
-all: $(NAME)
+OBJET_PF = $(SRC_PF:.c=.o)
+OBJET_LFT = $(SRC_LFT:.c=.o)
+LIBFT_PATH =  ./libft
 
-$(NAME):
-			gcc $(FLAGS) -c $(SRC)
-			ar rc $(NAME) $(OBJET) ./libft/*.o
-			ranlib $(NAME)
+FLAGS = -Wall -Werror -Wextra
+
+LIB = $(addprefix $(LIBFT_PATH)/, $(OBJET_LFT))
+GCC = gcc
+AR = ar
+ARFLAGS = rc
+MAKE = make
+
+.PHONY: clean fclean all re
+
+all: $(NAME) compile
+	@echo > /dev/null
+
+$(NAME): $(OBJET_PF)
+		@$(MAKE) -C $(LIBFT_PATH)
+		@echo Compiling $(NAME)
+		@$(GCC) $(FLAGS) -c $(SRC_PF)
+		@$(AR) $(ARFLAGS) $(NAME) $(OBJET_PF) $(LIB)
+		@ranlib $(NAME)
+		@echo ======[Done]======
+
+compile:
+		@$(MAKE) -C $(LIBFT_PATH)
 
 clean:
-			rm -rf $(OBJET)
+		@$(MAKE) clean -C $(LIBFT_PATH)
+		@echo Clean objects $(NAME)
+		@rm -rf $(OBJET_PF)
 
 fclean: clean
-			rm -rf $(OBJET) $(NAME)
+		@$(MAKE) fclean -C $(LIBFT_PATH)
+		@echo Clean $(NAME)
+		@rm -rf $(NAME)
+		@echo ======[Clean]======
 
 re: fclean all
