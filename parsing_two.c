@@ -6,13 +6,13 @@
 /*   By: vomnes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/15 10:03:02 by vomnes            #+#    #+#             */
-/*   Updated: 2017/01/10 17:54:32 by vomnes           ###   ########.fr       */
+/*   Updated: 2017/01/20 16:21:26 by vomnes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void ft_put_precision(const char *s, t_args *elem, int *i, int *k)
+static void	ft_put_precision(const char *s, t_args *elem, int *i, int *k)
 {
 	if (s[*i] == '*')
 	{
@@ -36,7 +36,7 @@ static void ft_put_precision(const char *s, t_args *elem, int *i, int *k)
 	}
 }
 
-int		ft_parsing_precision(const char *s, t_args *elem)
+int			ft_parsing_precision(const char *s, t_args *elem)
 {
 	int i;
 	int k;
@@ -61,7 +61,7 @@ int		ft_parsing_precision(const char *s, t_args *elem)
 	return (0);
 }
 
-static void ft_put_length(const char *s, t_args *elem, int *i, int *k)
+static void	ft_put_length(const char *s, t_args *elem, int *i, int *k)
 {
 	if (s[*i] == 'l' && s[(*i) + 1] == 'l')
 	{
@@ -90,7 +90,7 @@ static void ft_put_length(const char *s, t_args *elem, int *i, int *k)
 	elem[*k].new_start = *i;
 }
 
-int		ft_parsing_length(const char *s, t_args *elem)
+int			ft_parsing_length(const char *s, t_args *elem)
 {
 	int i;
 	int k;
@@ -110,7 +110,7 @@ int		ft_parsing_length(const char *s, t_args *elem)
 	return (0);
 }
 
-void	ft_parsing_type(const char *s, t_args *elem)
+void		ft_parsing_type(const char *s, t_args *elem)
 {
 	int i;
 	int k;
