@@ -1,5 +1,5 @@
 NAME = libftprintf.a
-SRC_PF =   check_errors.c convert_binary.c convert_char.c convert_date.c \
+SRC_PF = check_errors.c convert_binary.c convert_char.c convert_date.c \
 convert_hex.c convert_octal.c convert_ptr.c convert_signed.c convert_string.c \
 convert_unsigned.c convert_wstr.c ft_is.c ft_printf.c get_value.c \
 manage_date.c manage_hex.c manage_octal.c manage_octal_2.c manage_signed.c \
