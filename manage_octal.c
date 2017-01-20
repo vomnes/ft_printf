@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 void ft_octal_basic_one(const char *value, t_args *elem, int *k)
 {
@@ -22,10 +22,12 @@ void ft_octal_basic_one(const char *value, t_args *elem, int *k)
 	{
 		if (elem[*k].pre_hash == 0 || value[0] == '0')
 			while (i++ < elem[*k].width - elem[*k].size)
-				ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0', &elem[*k].arg_len);
+				ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0',
+                &elem[*k].arg_len);
 		else
 			while (i++ < elem[*k].width - ((int)ft_strlen(value) + 2) + 1)
-				ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0', &elem[*k].arg_len);
+				ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0',
+                &elem[*k].arg_len);
 	}
     if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 0 &&
         elem[*k].pre_zero == 0 && elem[*k].pre_hash == 0)
@@ -41,7 +43,7 @@ static void ft_octal_basic_two_bis(const char *value, t_args *elem, int *k)
     if (elem[*k].width <= elem[*k].precision)
         while (i++ < elem[*k].precision - elem[*k].size)
             ft_putchar_len('0', &elem[*k].arg_len);
-    else if (elem[*k].precision <= ft_strlen(value) &&
+    else if (elem[*k].precision <= (int)ft_strlen(value) &&
         elem[*k].end_space == 0)
         while (i++ < elem[*k].width - elem[*k].precision -
         ((int)ft_strlen(value) - elem[*k].precision))
@@ -87,7 +89,8 @@ void ft_octal_hash(const char *value, t_args *elem, int *k)
     elem[*k].pre_zero == 0 && elem[*k].pre_hash == 1 && elem[*k].end_space == 0)
     {
         if (elem[*k].precision <= (int)ft_strlen(value))
-            while (i++ < elem[*k].width - (int)ft_strlen(value) - (value[0] != '0') ? 1 : 0)
+            while (i++ < elem[*k].width - (int)ft_strlen(value) -
+            (value[0] != '0') ? 1 : 0)
                 ft_putchar_len(' ', &elem[*k].arg_len);
         else if (elem[*k].width > elem[*k].precision)
             while (i++ < elem[*k].width - elem[*k].precision)

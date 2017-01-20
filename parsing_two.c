@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 static void ft_put_precision(const char *s, t_args *elem, int *i, int *k)
 {
@@ -126,7 +126,6 @@ void	ft_parsing_type(const char *s, t_args *elem)
 		{
 			elem[k].end = i;
 			elem[k].type = s[i];
-			//ft_printf_struct(elem, &k);
 			k++;
 		}
 		i++;

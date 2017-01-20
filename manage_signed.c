@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 void ft_signed_end_space(char const *value, t_args *elem, int *k)
 {
@@ -56,7 +56,7 @@ void ft_put_signed_zeroes(char const *value, t_args *elem, int *k)
     else
     {
         if (elem[*k].ok_width == 1 && (elem[*k].neg == -1 ||
-            (elem[*k].pre_blank == 1 || elem[*k].pre_sign == 1)) && elem[*k].pre_zero == 1)
+        (elem[*k].pre_blank == 1 || elem[*k].pre_sign)) && elem[*k].pre_zero)
             while (i++ < elem[*k].width - (int)ft_strlen(value) - 1)
                 ft_putchar_len('0', &elem[*k].arg_len);
     }
@@ -100,7 +100,8 @@ void ft_put_signed_space(char const *value, int *k, t_args *elem)
             if (elem[*k].neg != -1 && elem[*k].pre_sign == 0 &&
                 elem[*k].pre_blank == 0)
                 while (i++ < elem[*k].width - (int)ft_strlen(value))
-                    ft_putchar_len((elem[*k].pre_zero == 1) ? '0' : ' ', &elem[*k].arg_len);
+                    ft_putchar_len((elem[*k].pre_zero == 1) ? '0' : ' ',
+                    &elem[*k].arg_len);
             else if (elem[*k].neg != -1 && (elem[*k].pre_sign == 1 ||
                 elem[*k].pre_blank == 1) && elem[*k].pre_zero == 0)
                 while (i++ < elem[*k].width - (int)ft_strlen(value) - 1)

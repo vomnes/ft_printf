@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 int     ft_adapt_octal(const char *value, t_args *elem, int *k)
 {
@@ -72,10 +72,9 @@ size_t	ft_count_ho(unsigned long long int nb, int base)
 
 int		ft_itoa_octal(unsigned long long int nb,  t_args *elem, int *k)
 {
-	int			len;
+	int			           len;
+	char		           str[100];
     unsigned long long int tmp_nb;
-	char		str[100];
-
 
     tmp_nb = nb;
 	ft_bzero(str, 100);

@@ -74,7 +74,7 @@ void 	ft_hex_basic_two(const char *value, t_args *elem, int *k);
 void 	ft_hex_hash(const char *value, t_args *elem, int *k);
 void 	ft_hex_zero_one(const char *value, t_args *elem, int *k);
 size_t	ft_count_ho(unsigned long long int nb, int base);
-int		ft_itoa_hex(unsigned long long int nb, char letter_a, int *k, t_args *elem);
+int		ft_itoa_hex(unsigned long long int nb, char a, int *k, t_args *elem);
 int 	ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);
 
 int     ft_adapt_octal(const char *value, t_args *elem, int *k);
@@ -106,6 +106,8 @@ size_t		ft_sizewchar(wchar_t wc);
 int		ft_putwchar_all(wchar_t wc);
 void	ft_putnwstr(const wchar_t *wc, size_t n);
 int		ft_print_wchar(wchar_t value, int *k, t_args *elem);
+void	ft_putwstr_size(const wchar_t *wc, size_t n);
+int	ft_wstrnlen(const wchar_t *wc, size_t n);
 int		ft_print_wstr(const wchar_t *value, int *k, t_args *elem);
 
 int ft_manage_hex(const char *value, t_args *elem, const char *prefix, int *k);

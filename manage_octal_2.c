@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 static void ft_octal_zero_one_bis(const char *value, t_args *elem, int *k)
 {
@@ -102,7 +102,7 @@ void ft_octal_end_space(const char *value, t_args *elem, int *k)
     {
         if (elem[*k].width > elem[*k].precision)
         {
-            if (elem[*k].precision <= ft_strlen(value))
+            if (elem[*k].precision <= (int)ft_strlen(value))
                 while (i++ < elem[*k].width - elem[*k].precision -
                 ((int)ft_strlen(value) - elem[*k].precision) -
                 ((elem[*k].pre_hash == 1 && value[0] != '0') ? 1 : 0))

@@ -10,24 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
-int     ft_adapt_unsigned(const char *value, t_args *elem, int *k)
-{
-    if (elem[*k].type == 'u' || elem[*k].type == 'U')
-    {
-        elem[*k].size = ft_strlen(value);
-        if (elem[*k].pre_sign == 1)
-            elem[*k].pre_sign = 0;
-        if (elem[*k].pre_blank == 1)
-            elem[*k].pre_blank = 0;
-        if (elem[*k].pre_hash == 1)
-            elem[*k].pre_hash = 0;
-    }
-    return (0);
-}
-
-void ft_u_width_precision(char const *value, int *k, t_args *elem)
+static void ft_u_width_precision(char const *value, int *k, t_args *elem)
 {
     int i;
 
@@ -39,10 +24,12 @@ void ft_u_width_precision(char const *value, int *k, t_args *elem)
                 ft_putchar_len('0', &elem[*k].arg_len);
         else
         {
-            if ((elem[*k].precision <= (int)ft_strlen(value)) && elem[*k].end_space == 0)
+            if ((elem[*k].precision <= (int)ft_strlen(value)) &&
+            elem[*k].end_space == 0)
                 while (i++ < elem[*k].width - (int)ft_strlen(value))
                     ft_putchar_len(' ', &elem[*k].arg_len);
-            else if ((elem[*k].precision > (int)ft_strlen(value)) && elem[*k].end_space == 0)
+            else if ((elem[*k].precision > (int)ft_strlen(value)) &&
+            elem[*k].end_space == 0)
                 while (i++ < elem[*k].width - elem[*k].precision)
                     ft_putchar_len(' ', &elem[*k].arg_len);
             i = 0;
@@ -52,7 +39,7 @@ void ft_u_width_precision(char const *value, int *k, t_args *elem)
     }
 }
 
-void ft_u_end_space(char const *value, int *k, t_args *elem)
+static void ft_u_end_space(char const *value, int *k, t_args *elem)
 {
     int i;
 
@@ -74,7 +61,7 @@ void ft_u_end_space(char const *value, int *k, t_args *elem)
     }
 }
 
-int ft_manage_unsigned(const char *value, t_args *elem, int *k)
+static void ft_manage_unsigned(const char *value, t_args *elem, int *k)
 {
     int i;
 
@@ -84,7 +71,8 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
         if ((elem[*k].precision <= (int)ft_strlen(value)) &&
         elem[*k].end_space == 0)
             while (i++ < elem[*k].width - (int)ft_strlen(value))
-                ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0', &elem[*k].arg_len);
+                ft_putchar_len((elem[*k].pre_zero == 0) ? ' ' : '0',
+                &elem[*k].arg_len);
     if (elem[*k].ok_precision == 1 && elem[*k].ok_width == 0)
         if (elem[*k].precision > (int)ft_strlen(value))
             while (i++ < elem[*k].precision - (int)ft_strlen(value))
@@ -98,12 +86,8 @@ int ft_manage_unsigned(const char *value, t_args *elem, int *k)
             ;
     }
     else
-    {
-        ft_putstr(value);
-        elem[*k].arg_len += (int)ft_strlen(value);
-    }
+        ft_putstr_len(value, &elem[*k].arg_len);
     ft_u_end_space(value, k, elem);
-	return (0);
 }
 
 int		ft_itoa_unsigned(unsigned long long int nb, int *k, t_args *elem)

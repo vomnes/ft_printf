@@ -42,10 +42,10 @@ int		ft_parsing_start(const char *s, t_args *elem)
 	int k;
 	int is_arg;
 
-	i = 0;
+	i = -1;
 	k = 0;
 	is_arg = 0;
-	while (s[i] != '\0')
+	while (s[++i] != '\0')
 	{
 		if (is_arg == 1 && ft_is_type(s[i]))
 			is_arg = 0;
@@ -59,7 +59,6 @@ int		ft_parsing_start(const char *s, t_args *elem)
 			is_arg = 1;
 			k++;
 		}
-		i++;
 	}
 	if (k > 0)
 		elem[0].nb_arg = k;

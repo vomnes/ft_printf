@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "ft_printf.h"
+#include "ft_printf.h"
 
 void ft_hex_basic_one(const char *value, t_args *elem, int *k)
 {
@@ -41,8 +41,7 @@ static void ft_hex_basic_two_bis(const char *value, t_args *elem, int *k)
     if (elem[*k].width <= elem[*k].precision)
         while (i++ < elem[*k].precision - (int)ft_strlen(value))
             ft_putchar_len('0', &elem[*k].arg_len);
-    else if (elem[*k].precision <= ft_strlen(value) &&
-        elem[*k].end_space == 0)
+    else if (elem[*k].precision <= (int)ft_strlen(value) && !elem[*k].end_space)
         while (i++ < elem[*k].width - elem[*k].precision -
             ((int)ft_strlen(value) - elem[*k].precision))
             ft_putchar_len(' ', &elem[*k].arg_len);

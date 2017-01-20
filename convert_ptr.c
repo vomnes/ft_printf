@@ -20,7 +20,7 @@ static void ft_ptr_start_space(const char *value, t_args *elem, int *k)
     i = 0;
     prefix_len = (elem[*k].ok_precision == 1 && elem[*k].precision == 0 &&
     value[0] == '0') ? 1 : 2;
-    if (elem[*k].ok_width == 1 && elem[*k].ok_precision == 1 && !elem[*k].end_space)
+    if (elem[*k].ok_width && elem[*k].ok_precision && !elem[*k].end_space)
     {
         if (elem[*k].precision >= (int)ft_strlen(value))
             while (i++ < elem[*k].width - elem[*k].precision - prefix_len)
@@ -34,7 +34,8 @@ static void ft_ptr_start_space(const char *value, t_args *elem, int *k)
         if (elem[*k].ok_width == 1 && elem[*k].end_space == 0 &&
             elem[*k].pre_zero == 0)
             if (elem[*k].width >= (int)ft_strlen(value) - prefix_len)
-                while (i++ < elem[*k].width - (int)ft_strlen(value) - prefix_len)
+                while (i++ < elem[*k].width - (int)ft_strlen(value)
+                - prefix_len)
                     ft_putchar_len(' ', &elem[*k].arg_len);
     }
 }
