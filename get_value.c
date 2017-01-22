@@ -89,6 +89,8 @@ static void			ft_conv(t_args *elem, int *k, va_list *args, int *ret)
 		*ret = ft_put_date(va_arg(*args, char *), k, elem);
 	else if (elem[*k].type == '%')
 		*ret = ft_print_char('%', k, elem);
+	else if (elem[*k].type == 'Z')
+		*ret = ft_print_char('Z', k, elem);
 	else if (elem[*k].type == 'C')
 		*ret = ft_print_wchar(va_arg(*args, wchar_t), k, elem);
 	else if (elem[*k].type == 'S')

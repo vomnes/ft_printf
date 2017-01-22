@@ -17,7 +17,7 @@ int		ft_is_type(int c)
 	return (c == 's' || c == 'S' || c == 'p' || c == 'd' || c == 'D' ||
 			c == 'i' || c == 'o' || c == 'O' || c == 'u' || c == 'U' ||
 			c == 'x' || c == 'X' || c == 'c' || c == 'C' || c == '%' ||
-			c == 'b' || c == 'k');
+			c == 'b' || c == 'k' || c == 'Z');
 }
 
 int		ft_is_type_less_pct(int c)
