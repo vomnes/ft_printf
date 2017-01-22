@@ -41,8 +41,7 @@ static int	ft_run(char const *format, t_args *elem, va_list *args, int *len)
 	{
 		if (i == elem[k].start && elem[k].ok_start == 1)
 		{
-			ret = ft_check_type(elem, &k, args);
-			if (ret == -1)
+			if ((ret = ft_check_type(elem, &k, args)) == -1)
 				return (-1);
 			*len += ret;
 			i = elem[k].end;
@@ -50,13 +49,25 @@ static int	ft_run(char const *format, t_args *elem, va_list *args, int *len)
 			k++;
 		}
 		else
-		{
-			ft_putchar(format[i]);
-			(*len)++;
-		}
+			ft_putchar_len(format[i], len);
 		i++;
 	}
 	return (*len);
+}
+
+static int ft_run_all(const char *format, t_args *elem, va_list *args, int *len)
+{
+	if (ft_manage_parsing(format, elem) == -1)
+	{
+		free(elem);
+		return (0);
+	}
+	if (ft_run(format, elem, args, len) == -1)
+	{
+		free(elem);
+		return (-1);
+	}
+	return (1);
 }
 
 int			ft_printf(const char *format, ...)
@@ -65,33 +76,22 @@ int			ft_printf(const char *format, ...)
 	t_args	*elem;
 	int		nb_pct;
 	int		len;
+	int 	ret;
 
-	if (format == NULL)
+	if (format == NULL || *format == '\0')
 		return (0);
-	if (*format == '\0')
-		return (0);
-	nb_pct = ft_nb_pct(format);
-	if (nb_pct == 0)
+	if ((nb_pct = ft_nb_pct(format)) == 0)
 	{
 		ft_putstr(format);
 		return ((int)ft_strlen(format));
 	}
 	if (!(elem = ft_memalloc(sizeof(t_args) * nb_pct)))
 		return (-1);
+	ret = 0;
 	len = 0;
 	va_start(args, format);
-	if (ft_manage_parsing(format, elem) == -1)
-	{
-		free(elem);
-		return (0);
-		exit(-1);
-	}
-	if (ft_run(format, elem, &args, &len) == -1)
-	{
-		free(elem);
-		return (-1);
-		exit(-1);
-	}
+	if ((ret = ft_run_all(format, elem, &args, &len)) <= 0)
+		return (ret);
 	va_end(args);
 	free(elem);
 	return (len);
