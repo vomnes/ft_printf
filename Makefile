@@ -23,10 +23,9 @@ MAKE = make
 
 .PHONY: clean fclean all re
 
-all: $(NAME) compile
-	@echo > /dev/null
+all: $(NAME)
 
-$(NAME): $(OBJET_PF)
+$(NAME): $(OBJET_PF) $(SRC_PF) $(LIB)
 		@$(MAKE) -C $(LIBFT_PATH)
 		@echo Compiling $(NAME)
 		@$(GCC) $(FLAGS) -c $(SRC_PF)
@@ -34,16 +33,16 @@ $(NAME): $(OBJET_PF)
 		@ranlib $(NAME)
 		@echo ======[Done]======
 
-compile:
-		@$(MAKE) -C $(LIBFT_PATH)
+%.o : %.c
+		@echo "$(NAME) >>> Add/Update $^"
 
 clean:
-		@$(MAKE) clean -C $(LIBFT_PATH)
+		@$(MAKE) -C $(LIBFT_PATH) clean
 		@echo Clean objects $(NAME)
 		@rm -rf $(OBJET_PF)
 
 fclean: clean
-		@$(MAKE) fclean -C $(LIBFT_PATH)
+		@$(MAKE) -C $(LIBFT_PATH) fclean
 		@echo Clean $(NAME)
 		@rm -rf $(NAME)
 		@echo ======[Clean]======
