@@ -22,9 +22,6 @@ static void	ft_wstr_pre_bis(const wchar_t *val, int *len, int *k, t_args *elem)
 	if (val != NULL && elem[*k].precision < (int)ft_sizewchar(val[0]))
 		while (i++ < elem[*k].width - elem[*k].precision + elem[*k].precision)
 			ft_putchar_len(space, &elem[*k].arg_len);
-	else if ((elem[*k].width - elem[*k].precision) < *len)
-		while (i++ < elem[*k].precision - *len)
-			ft_putchar_len(space, &elem[*k].arg_len);
 	else if (elem[*k].precision <= *len)
 		while (i++ < elem[*k].width - elem[*k].precision +
 		(*len - elem[*k].precision))
@@ -85,9 +82,9 @@ static void	ft_wstr_print(const wchar_t *value, int *len, int *k, t_args *elem)
 	}
 	else
 	{
-		if (elem[*k].ok_precision == 1 && elem[*k].precision < *len)
+		if (elem[*k].ok_precision == 1)
 		{
-			write(1, "(null)", elem[*k].precision);
+			write(1, "(null)", *len);
 			elem[*k].arg_len += elem[*k].precision;
 		}
 		else
@@ -106,7 +103,12 @@ int			ft_print_wstr(const wchar_t *value, int *k, t_args *elem)
 	i = 0;
 	len = 0;
 	if (value == NULL)
-		len = 6;
+	{
+		if (elem[*k].ok_precision == 1 && elem[*k].precision < 6)
+			len = elem[*k].precision;
+		else
+			len = 6;
+	}
 	else
 	{
 		while (value[i] != L'\0')

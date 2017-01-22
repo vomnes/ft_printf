@@ -35,18 +35,25 @@ void	ft_putwstr_size(const wchar_t *wc, size_t n)
 int		ft_wstrnlen(const wchar_t *wc, size_t n)
 {
 	size_t i;
+	size_t add;
 
 	i = 0;
+	add = 0;
 	while (*wc && i < n)
 	{
+		add = 0;
 		if (*wc <= 0x7F)
-			i++;
+			add = 1;
 		else if (*wc <= 0x7FF)
-			i += 2;
+			add = 2;
 		else if (*wc <= 0xFFFF)
-			i += 3;
+			add = 3;
 		else if (*wc <= 0x10FFFF)
-			i += 4;
+			add = 4;
+		if (i + add <= n)
+			i += add;
+		else
+			return (i);
 	}
 	return (i);
 }
