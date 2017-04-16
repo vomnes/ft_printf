@@ -3,7 +3,7 @@ This is my own printf (language C), my first big language C project.
 
 ### Prototype
 ```
-int			ft_printf(const char *format, ...)
+int   ft_printf(const char *format, ...)
 ```
 
 ### Examples
@@ -21,12 +21,17 @@ ft_printf("%010b\n", 42);
 ```
 
 ## Details
-- Wildcard managed
 - Width managed
 - Precision managed
+- Wildcard managed
+
+### Syntax
+```
+%[flags][width][.precision][length]type
+```
 
 ### Conversions
-| Character        | Description           |
+| Character | Description |
 |:-------------:|:-------------|
 | dDi | int as a signed decimal number |
 | c | Character |
@@ -41,22 +46,20 @@ ft_printf("%010b\n", 42);
 | % | Print percentage |
 | k | Print a date in any ordinary ISO format |
 
-sSpdDioOuUxXcC
-
 ### Flags field
-| Flag        | Description           |
-|:------------- |:-------------|
-| #      | For o, x, X types, the text 0, 0x, 0X, respectively, is prepended to non-zero numbers. |
-| 0      | When the 'width' option is specified, prepends zeros for numeric types.      |
-| - | Left-align the output of this placeholder.      |
+| Flag | Description |
+|:-------------:|:-------------|
+| #      | For o, x, X types, the text 0, 0x, 0X, respectively, is prepended to non-zero numbers |
+| 0      | When the 'width' option is specified, prepends zeros for numeric types      |
+| - | Left-align the output of this placeholder      |
 | + | Prepends a plus for positive signed-numeric types. positive = +, negative = -.      |
 | space | Prepends a space for positive signed-numeric types. positive =  , negative = -. This flag is ignored if the + flag exists.      |
 ### Length field
-| Character     |Description|
+| Character | Description |
 |:-------------:|:-------------|
-| hh      | For integer types, causes printf to expect an int-sized integer argument which was promoted from a char.  |
-| h      | For integer types, causes printf to expect an int-sized integer argument which was promoted from a short.      |
-| l | For integer types, causes printf to expect a long-sized integer argument.      |
-| ll | For integer types, causes printf to expect a long-sized integer argument.      |
-| j | For integer types, causes printf to expect a intmax_t-sized integer argument.      |
-| z | For integer types, causes printf to expect a size_t-sized integer argument.      |
+| hh      | For integer types, causes printf to expect an int-sized integer argument which was promoted from a char  |
+| h      | For integer types, causes printf to expect an int-sized integer argument which was promoted from a short      |
+| l | For integer types, causes printf to expect a long-sized integer argument      |
+| ll | For integer types, causes printf to expect a long-sized integer argument      |
+| j | For integer types, causes printf to expect a intmax_t-sized integer argument      |
+| z | For integer types, causes printf to expect a size_t-sized integer argument      |
