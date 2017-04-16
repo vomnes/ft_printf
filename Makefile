@@ -11,7 +11,7 @@ ft_strlen.c ft_putwchar.c
 
 OBJET_PF = $(SRC_PF:.c=.o)
 OBJET_LFT = $(SRC_LFT:.c=.o)
-LIBFT_PATH =  ./libft
+LIBFT_PATH =  ../libft
 
 FLAGS = -Wall -Werror -Wextra
 
