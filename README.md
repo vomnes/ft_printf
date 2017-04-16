@@ -3,7 +3,7 @@ This is my own printf (language C), my first big language C project.
 
 ### Function prototype
 ```
-int   ft_printf(const char *format, ...)
+int   ft_printf(const char *format, ...);
 ```
 
 ### Examples
