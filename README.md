@@ -1,7 +1,7 @@
 # ft_printf
 This is my own printf (language C), my first big language C project.
 
-### Prototype
+### Function prototype
 ```
 int   ft_printf(const char *format, ...)
 ```
